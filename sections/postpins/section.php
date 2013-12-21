@@ -125,9 +125,11 @@ class PLPostPins extends PageLinesSection {
 		global $post;
 
 
-		$category = ($this->opt('pins_category', $this->oset)) ? $this->opt('pins_category', $this->oset) : null;
+		$category = ($this->opt('pins_category' )) ? $this->opt('pins_category') : null;
 
-		$number_of_pins = ($this->opt('pins_number', $this->oset)) ? $this->opt('pins_number', $this->oset) : 15;
+		$number_of_pins = ($this->opt('pins_number' )) ? $this->opt('pins_number') : 15;
+
+		$special_meta = ($this->opt('pins_meta')) ? $this->opt('pins_meta') : '[post_date] / [post_comments]';
 
 		// JAVASCRIPT VARIABLES
 		$pin_width = ($this->opt('pins_width')) ? $this->opt('pins_width') : 255;
@@ -164,12 +166,13 @@ class PLPostPins extends PageLinesSection {
 			$author_email = get_the_author_meta('email', $p->post_author);
 			$avatar = get_avatar( $author_email, '32' );
 
+
 			$meta_bottom = sprintf(
-				'<div class="media fix"><div class="img">%s</div><div class="bd pin-meta subtext"><strong>%s</strong> <br/> %s <span class="divider">/</span> %s</div></div>',
+				'<div class="media fix"><div class="img">%s</div><div class="bd pin-meta subtext"><strong>%s</strong> <br/> %s </div></div>',
 				$avatar,
 				ucwords	( $author_name ),
-				get_the_time('M j, Y', $p->ID),
-				$this->pl_get_comments_link($p->ID)
+				do_shortcode( $special_meta )
+				
 			);
 
 			$content = sprintf(
@@ -224,6 +227,7 @@ class PLPostPins extends PageLinesSection {
 	function pl_get_comments_link( $post_id ){
 
 		$num_comments = get_comments_number($post_id);
+		
 		 if ( comments_open() ){
 		 	  if($num_comments == 0){
 		 	  	  $comments = __('Add', 'pagelines');
@@ -234,7 +238,7 @@ class PLPostPins extends PageLinesSection {
 		 	  }
 		 $write_comments = '<a href="' . get_comments_link($post_id) .'">'. $comments.' <i class="icon-comments"></i></a>';
 		 }
-		else{$write_comments =  '';}
+		else{ $write_comments =  false; }
 
 		return $write_comments;
 
@@ -323,6 +327,14 @@ class PLPostPins extends PageLinesSection {
 							'opts'			=> $this->get_image_sizes(),
 							'label'		 	=> __( 'Select attachment image source', 'pagelines' ),
 							'title' 		=> __( 'Attachment source', 'pagelines' ),
+						),
+						array(
+							'key'		=> 'pins_meta',
+							'default'	=> '[post_date] / [post_comments]',
+							'type' 		=> 'text',
+							'label' 	=> __( 'Pin Meta Info', 'pagelines' ),
+							'title' 	=> __( 'Pin Meta Info', 'pagelines' ),
+							'help' 		=> __( 'Use shortcodes to customize the meta information for these pins.', 'pagelines' )
 						),
 						array(
 							'key'			=> 'pins_post_type',
