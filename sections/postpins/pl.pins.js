@@ -60,8 +60,10 @@
 							
 						
 							theList
-								.masonry('appended', $( arrayOfNewElems ) )
 								.find('.postpin-wrap').width( colWidth - 18 )
+								.end()
+								.masonry('appended', $( arrayOfNewElems ) )
+							
 							
 						})
 						
