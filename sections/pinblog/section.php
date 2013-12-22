@@ -38,16 +38,33 @@ class PinBlog extends PageLinesSection {
 		?>
 		<div class="row fix">
 			<div class="span9">
+				
 				<article class="article <?php echo join(' ', get_post_class()); ?>">
+					<?php  if( is_single() ): ?>
+						<div class="the-nav fix">
+							<span class="previous"><?php previous_post_link('%link', '<i class="icon-angle-left"></i> %title') ?></span>
+							<span class="next"><?php next_post_link('%link', '%title <i class="icon-angle-right"></i>') ?></span>
+						</div>
+					<?php endif; ?>
 					<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'aspect-thumb' ); ?></a>
 					<div class="the-text">
 						<h2 class="title"><a href="<?php the_permalink(); ?>"><?php echo get_the_title(); ?></a></h2>
 						<div class="content">
-							<?php echo get_the_excerpt(); ?>
+							<?php 
+								if( is_single() )
+									echo the_content(); 
+								else 
+									echo get_the_excerpt(); 
+								?>
 						</div>
 					</div>
 					<div class="the-footer fix">
-						<a href="<?php the_permalink(); ?>">Read More <i class="icon-angle-right"></i></a>
+						<?php  if( ! is_single() ): ?>
+							<a href="<?php the_permalink(); ?>">Read More <i class="icon-angle-right"></i></a>
+						<?php else: ?>
+							<?php previous_post_link('%link', 'Next article: %title') ?>
+						<?php endif; ?>
+						
 						<div class="social-shares">
 							<?php echo do_shortcode('[like_button] [pinterest] [twitter_button]');?>
 						</div>
