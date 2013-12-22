@@ -1,6 +1,6 @@
 <?php
 /*
-	Section: NavBoard
+	Section: PostPins
 	Author: PageLines
 	Author URI: http://www.pagelines.com
 	Description: A continuous list of post 'pins'.
