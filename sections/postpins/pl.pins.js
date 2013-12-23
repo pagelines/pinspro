@@ -18,7 +18,7 @@
 			theContainers.each( function(){
 				
 				var theList = $(this)
-				,	theListID = theList.data('id')
+				,	theListID = theList.parent().data('id')
 				,	colWidth = theList.data('pin-width')
 				,	gtrWidth = theList.data('gutter-width')
 				,	loadStyle = theList.data('loading')
@@ -90,7 +90,8 @@
 								var newContainer = $( out ).find( sprintf('[data-id="%s"]', theListID ) )
 								, 	result = newContainer.find( '.postpin-wrap' )
 								,	nextlink = newContainer.find( '.fetchpins a' ).attr('href')
-
+								
+								console.log(nextlink)
 								
 								result
 									.find('.postpin-wrap').width( colWidth - 18 )

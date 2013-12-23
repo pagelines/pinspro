@@ -19,251 +19,6 @@ class PLPostPins extends PageLinesSection {
 		
 	}
 
-	function old_section_head(){
-
-		
-		?>
-		<style>.postpin-wrap{ width: <?php echo $width;?>px; }</style>
-		<script>
-
-		jQuery(document).ready(function () {
-
-			var theContainer = jQuery('.postpin-list');
-			var containerWidth = theContainer.width();
-
-
-			theContainer.imagesLoaded(function(){
-
-				theContainer.masonry({
-					itemSelector : '.postpin-wrap',
-					columnWidth: <?php echo $width;?>,
-					gutterWidth: <?php echo $gutter_width;?>,
-					isFitWidth: true
-				});
-
-			});
-
-			<?php if($this->opt('pins_loading', $this->oset) == 'infinite'): ?>
-
-				theContainer.infinitescroll({
-					navSelector : '.iscroll',
-					nextSelector : '.iscroll a',
-					itemSelector : '.postpin-list .postpin-wrap',
-					loadingText : 'Loading...',
-					loadingImg :  '<?php echo $this->base_url."/load.gif";?>',
-					donetext : 'No more pages to load.',
-					debug : true,
-					loading: {
-						finishedMsg: 'No more pages to load.'
-					}
-				}, function(arrayOfNewElems) {
-					theContainer.imagesLoaded(function(){
-						theContainer.masonry('appended', jQuery(arrayOfNewElems));
-					});
-				});
-
-			<?php endif;?>
-
-		});
-
-			<?php if($this->opt('pins_loading', $this->oset) != 'infinite'): ?>
-			jQuery('.fetchpins a').live('click', function(e) {
-				e.preventDefault();
-				jQuery(this).addClass('loading').text('<?php _e('Loading...', 'pagelines');?>');
-				jQuery.ajax({
-					type: "GET",
-					url: jQuery(this).attr('href') + '#pinboard',
-					dataType: "html",
-					success: function(out) {
-
-						result = jQuery(out).find('.pinboard .postpin-wrap');
-						nextlink = jQuery(out).find('.fetchpins a').attr('href');
-
-						var theContainer = jQuery('.postpin-list');
-
-						theContainer.append(result);
-
-						theContainer.imagesLoaded(function(){
-							theContainer.masonry('appended', result);
-						});
-
-						jQuery('.fetchpins a').removeClass('loading').text('<?php _e('Load More Posts', 'pagelines');?>');
-
-
-
-						if (nextlink != undefined) {
-							jQuery('.fetchpins a').attr('href', nextlink);
-						} else {
-							jQuery('.fetchpins').remove();
-						}
-					}
-				});
-			});
-			<?php endif;?>
-
-
-		</script>
-	<?php }
-
-	/* Section template.
-	 ****************************/
-	function pl_current_url(){
-
-
-		$url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-		return substr($url,0,strpos($url, '?'));
-	}
-
-	/**
-	* Section template.
-	*/
-   function section_template() {
-
-
-		global $wp_query;
-		global $post;
-
-
-		$category = ($this->opt('pins_category' )) ? $this->opt('pins_category') : null;
-
-		$number_of_pins = ($this->opt('pins_number' )) ? $this->opt('pins_number') : 15;
-
-		$special_meta = ($this->opt('pins_meta')) ? $this->opt('pins_meta') : '[post_date] / [post_comments]';
-
-		// JAVASCRIPT VARIABLES
-		$pin_width = ($this->opt('pins_width')) ? $this->opt('pins_width') : 255;
-		$gutter_width = ($this->opt('pins_gutterwidth')) ? $this->opt('pins_gutterwidth') : 15;
-		$loading = ( $this->opt('pins_loading') ) ? $this->opt('pins_loading') : 'ajax';
-
-		$current_url = $this->pl_current_url();
-
-		$image_size = ( $this->opt( 'pins_thumbsize', $this->oset ) ) ? $this->opt( 'pins_thumbsize', $this->oset ) : 'medium';
-
-		$page = (isset($_GET['pins']) && $_GET['pins'] != 1) ? $_GET['pins'] : 1;
-
-		$out = '';
-
-		foreach( $this->load_posts($number_of_pins, $page, $category) as $key => $p ){
-
-			if(has_post_thumbnail($p->ID) && get_the_post_thumbnail($p->ID) != ''){
-				$thumb = get_the_post_thumbnail($p->ID, $image_size );
-
-				$check = strpos( $thumb, 'data-lazy-src' );
-				if( $check ) {
-					// detected lazy-loader.
-					$thumb = preg_replace( '#\ssrc="[^"]*"#', '', $thumb );
-					$thumb = str_replace( 'data-lazy-', '', $thumb );
-				}
-				$image = sprintf('<div class="pin-img-wrap"><a class="pin-img" href="%s">%s</a></div>', get_permalink( $p->ID ), $thumb);
-			} else
-				$image = '';
-				
-		
-			$author_name = get_the_author();
-			$default_avatar = PL_IMAGES . '/avatar_default.gif';
-			$author_desc = custom_trim_excerpt( get_the_author_meta('description', $p->post_author), 10);
-			$author_email = get_the_author_meta('email', $p->post_author);
-			$avatar = get_avatar( $author_email, '32' );
-
-
-			$meta_bottom = sprintf(
-				'<div class="media fix"><div class="img">%s</div><div class="bd pin-meta subtext"><strong>%s</strong> <br/> %s </div></div>',
-				$avatar,
-				ucwords	( $author_name ),
-				do_shortcode( $special_meta )
-				
-			);
-
-			$content = sprintf(
-				'<div class="postpin-pad"><h4 class="headline pin-title"><a href="%s">%s</a></h4><div class="pin-excerpt summary">%s %s</div></div><div class="postpin-pad pin-bottom">%s</div>',
-			
-				get_permalink( $p->ID ),
-				$p->post_title,
-				custom_trim_excerpt($p->post_content, 25),
-				pledit($p->ID),
-				$meta_bottom
-			);
-
-			$out .= sprintf(
-				'<div class="postpin-wrap" style="width: %spx;"><article class="postpin">%s%s</article></div>',
-				$pin_width - 18,
-				$image,
-				$content
-			);
-		}
-		
-		$pg = $page+1;
-		$u = $current_url.'?pins='.$pg;
-
-		$next_posts = $this->load_posts($number_of_pins, $pg, $category);
-
-		if( !empty($next_posts) ){
-
-			$class = ( $this->opt('pins_loading', $this->oset) == 'infinite' ) ? 'iscroll' : 'fetchpins';
-
-			$display = ($class == 'iscroll') ? 'style="display: none"' : '';
-
-			$next_url = sprintf('<div class="%s fetchlink" %s><a class="btn" href="%s">%s</a></div>', $class, $display, $u, __('Load More Posts', 'pagelines'));
-
-		} else
-			$next_url = '';
-		
-		
-		
-		
-		printf(	
-			'<div class="pinboard fix"> <div class="postpin-list fix" data-id="%s" data-loading="%s" data-pin-width="%s" data-gutter-width="%s" data-url="%s">%s</div> %s <div class="clear"></div></div>', 
-			$this->meta['clone'],
-			$loading,
-			$pin_width,
-			$gutter_width,
-			$this->base_url,
-			$out, 
-			$next_url
-		);
-	}
-
-	function pl_get_comments_link( $post_id ){
-
-		$num_comments = get_comments_number($post_id);
-		
-		 if ( comments_open() ){
-		 	  if($num_comments == 0){
-		 	  	  $comments = __('Add', 'pagelines');
-		 	  } elseif($num_comments > 1){
-		 	  	  $comments = $num_comments;
-		 	  } else{
-		 	  	   $comments ='1';
-		 	  }
-		 $write_comments = '<a href="' . get_comments_link($post_id) .'">'. $comments.' <i class="icon-comments"></i></a>';
-		 }
-		else{ $write_comments =  false; }
-
-		return $write_comments;
-
-	}
-
-	function load_posts( $number = 20, $page = 1, $category = null){
-		$query = array();
-
-		if( isset($category) && !empty($category) )
-			$query['category_name'] = $category;
-
-		$query['paged'] = $page;
-
-		$query['showposts'] = $number;
-
-		$q = new WP_Query($query);
-
-		return $q->posts;
-	}
-
-	/**
-	 *
-	 * Page-by-page options for PostPins
-	 *
-	 */
 	function section_opts(  ){
 
 	
@@ -362,6 +117,148 @@ class PLPostPins extends PageLinesSection {
 			return $options;
 
 	}
+
+	
+	function pl_current_url(){
+
+		$url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+		return substr($url,0,strpos($url, '?'));
+	}
+
+	/**
+	* Section template.
+	*/
+   function section_template() {
+
+
+		global $wp_query;
+		global $post;
+
+
+		$category = ($this->opt('pins_category' )) ? $this->opt('pins_category') : null;
+		$post_type = ($this->opt('pins_post_type' )) ? $this->opt('pins_post_type') : 'post';
+
+		$number_of_pins = ($this->opt('pins_number' )) ? $this->opt('pins_number') : 15;
+
+		$special_meta = ($this->opt('pins_meta')) ? $this->opt('pins_meta') : '[post_date] / [post_comments]';
+
+		// JAVASCRIPT VARIABLES
+		$pin_width = ($this->opt('pins_width')) ? $this->opt('pins_width') : 255;
+		$gutter_width = ($this->opt('pins_gutterwidth')) ? $this->opt('pins_gutterwidth') : 15;
+		$loading = ( $this->opt('pins_loading') ) ? $this->opt('pins_loading') : 'ajax';
+
+		$current_url = $this->pl_current_url();
+
+		$image_size = ( $this->opt( 'pins_thumbsize', $this->oset ) ) ? $this->opt( 'pins_thumbsize', $this->oset ) : 'medium';
+
+		$page = (isset($_GET['pins']) && $_GET['pins'] != 1) ? $_GET['pins'] : 1;
+		
+		$out = '';
+		
+		$pins = $this->load_posts($number_of_pins, $page, $category, $post_type);
+
+		foreach( $pins as $key => $p ){
+
+			if(has_post_thumbnail($p->ID) && get_the_post_thumbnail($p->ID) != ''){
+				$thumb = get_the_post_thumbnail($p->ID, $image_size );
+
+				$check = strpos( $thumb, 'data-lazy-src' );
+				if( $check ) {
+					// detected lazy-loader.
+					$thumb = preg_replace( '#\ssrc="[^"]*"#', '', $thumb );
+					$thumb = str_replace( 'data-lazy-', '', $thumb );
+				}
+				$image = sprintf('<div class="pin-img-wrap"><a class="pin-img" href="%s">%s</a></div>', get_permalink( $p->ID ), $thumb);
+			} else
+				$image = '';
+				
+		
+			$author_name = get_the_author();
+			$default_avatar = PL_IMAGES . '/avatar_default.gif';
+			$author_desc = custom_trim_excerpt( get_the_author_meta('description', $p->post_author), 10);
+			$author_email = get_the_author_meta('email', $p->post_author);
+			$avatar = get_avatar( $author_email, '32' );
+
+
+			$meta_bottom = sprintf(
+				'<div class="media fix"><div class="img">%s</div><div class="bd pin-meta subtext"><strong>%s</strong> <br/> %s </div></div>',
+				$avatar,
+				ucwords	( $author_name ),
+				do_shortcode( $special_meta )
+				
+			);
+
+			$content = sprintf(
+				'<div class="postpin-pad"><h4 class="headline pin-title"><a href="%s">%s</a></h4><div class="pin-excerpt summary">%s %s</div></div><div class="postpin-pad pin-bottom">%s</div>',
+			
+				get_permalink( $p->ID ),
+				$p->post_title,
+				custom_trim_excerpt($p->post_content, 25),
+				pledit($p->ID),
+				$meta_bottom
+			);
+
+			$out .= sprintf(
+				'<div class="postpin-wrap" style="width: %spx;"><article class="postpin">%s%s</article></div>',
+				$pin_width - 18,
+				$image,
+				$content
+			);
+		}
+		
+		$u = add_query_arg('pins', $page + 1, pl_current_url());
+
+		$next_posts = $this->load_posts($number_of_pins, $page + 1, $category, $post_type);
+
+		if( !empty($next_posts) ){
+
+			$class = ( $this->opt('pins_loading', $this->oset) == 'infinite' ) ? 'iscroll' : 'fetchpins';
+
+			$display = ($class == 'iscroll') ? 'style="display: none"' : '';
+
+			$next_url = sprintf('<div class="%s fetchlink" %s><a class="btn" href="%s">%s</a></div>', $class, $display, $u, __('Load More Posts', 'pagelines'));
+
+		} else
+			$next_url = '';
+		
+		
+		
+		
+		printf(	
+			'<div class="pinboard fix" data-id="%s"> 
+				<div class="postpin-list fix"  data-loading="%s" data-pin-width="%s" data-gutter-width="%s" data-url="%s">%s</div> 
+				%s 
+				<div class="clear"></div>
+			</div>', 
+			$this->meta['clone'],
+			$loading,
+			$pin_width,
+			$gutter_width,
+			$this->base_url,
+			$out, 
+			$next_url
+		);
+	}
+
+	function load_posts( $number = 20, $page = 1, $category = null, $post_type = 'post'){
+		$query = array();
+
+		if( isset($category) && !empty($category) )
+			$query['category_name'] = $category;
+
+		$query['paged'] = $page;
+
+		$query['showposts'] = $number;
+		
+		$query['post_type'] = $post_type;
+
+		$q = new WP_Query($query);
+
+		return $q->posts;
+	}
+
+
 	function get_image_sizes() {
 		global $_wp_additional_image_sizes;
 
