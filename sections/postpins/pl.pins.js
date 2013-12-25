@@ -91,7 +91,7 @@
 								, 	result = newContainer.find( '.postpin-wrap' )
 								,	nextlink = newContainer.find( '.fetchpins a' ).attr('href')
 								
-								console.log(nextlink)
+								
 								
 								result
 									.find('.postpin-wrap').width( colWidth - 18 )

@@ -33,22 +33,16 @@ class PinFooter extends PageLinesSection {
 			</div>
 		</div>
 		<div class="span2 offset2">
-			<ul class="media-list">
-				<lh class="title">Pages</lh>
-				<?php echo pl_list_pages(); ?>
-			</ul>
+			<?php echo pl_media_list('Pages', pl_list_pages()); ?>
+			
 		</div>
 		<div class="span2">
-			<ul class="media-list">
-				<lh class="title">Categories</lh>
-				<?php pl_popular_taxonomy(); ?>
-			</ul>
+			<?php echo pl_media_list('Categories', pl_popular_taxonomy()); ?>
+			
 		</div>
 		<div class="span2">
-			<ul class="media-list">
-				<lh class="title">Tags</lh>
-				<?php pl_popular_taxonomy( 6, 'post_tag');?>
-			</ul>
+			<?php echo pl_media_list('Tags', pl_popular_taxonomy( 6, 'post_tag')); ?>
+			
 		</div>
 	</div>
 	
