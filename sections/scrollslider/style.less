@@ -1,25 +1,35 @@
-.section-pinhead{
+.section-scrollslider{
 
 
 	@media only screen and (max-device-width: 1481px) {
 	    
 	}
-	.pinhead-slider {
-	  width: 400%;
+	
+	.the-content, 
+	.btn{
+		text-shadow: 0 1px 1px rgba(0,0,0,0.8);	
 	}
-	.pinhead-holder {
+	.btn{
+		box-shadow: 0 1px 1px rgba(0,0,0,.8);
+	}
+	
+	.scrollslider-slider {
+	  width: 400%;
+		
+	}
+	.scrollslider-holder {
 		width: 100%;
 		overflow-x: scroll;
 		position: relative;
 		margin-bottom: -15px;
 		-webkit-overflow-scroll: touch;
 	}
-	.the-pinhead{
+	.the-scrollslider{
 		position: relative;
 		overflow: hidden;
 	}
 	
-	.pinhead-loader{
+	.scrollslider-loader{
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -28,10 +38,10 @@
 		width: 100%;
 		z-index: 40;
 	}
-	.pinhead-nav{
+	.scrollslider-nav{
 		position: absolute;
 		bottom: 0;
-		padding: 5px;
+		padding: 5px 0;
 		text-align: center;
 		width: 100%;
 		a{
@@ -70,9 +80,12 @@
 			bottom: 0;
 			left: 0;
 			width: 100%;
+			height: 20%;
+		//	#gradient > .vertical( rgba(0,0,0,0), rgba(0,0,0,.3));
+		}
+		&.slide-overlay:before{
 			height: 100%;
 			background: rgba(0,0,0,.22);
-			//#gradient > .vertical( rgba(0,0,0,0), rgba(0,0,0,.6));
 		}
 	}
 	#slide-1 {

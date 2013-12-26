@@ -4,42 +4,59 @@
 	$(document).ready(function() {
 		
 		
-		$.plPinHead.init()
+		$.plScrollSlider.init()
 		
 		
 		
 	})
 	
-	$.plPinHead = {
+	$.plScrollSlider = {
 
 		init: function( ){
 			
 			var that = this
 			,	pinSlideHeight = 0
-			,	allSlides = $('.pinhead-holder .slide')
-			
-			this.slider = $('.pinhead-holder')
-			
-			this.navElements = $('.pinhead-nav a')
-			
-			this.numSlides = allSlides.length
-			
-			this.duration = 10000
-			this.transition = 7000
 		
 			
-			allSlides.each( function(){
+			that.allSlides = $('.scrollslider-holder .slide')
+			
+			that.slider = $('.scrollslider-holder')
+			
+			
+			
+			that.numSlides = that.allSlides.length
+			
+			that.duration = (that.slider.data('duration')) ? that.slider.data('duration') : 10000
+			that.transition = (that.slider.data('transition')) ? that.slider.data('transition') : 800
+			
+			that.timer = (that.slider.data('timer')) ? that.slider.data('timer') : 1
+		
+			// Setup Slide Dimensions
+			var sliderTotalWidth = that.numSlides * 100
+			,	slideIndWidth = 100 / that.numSlides
+			
+			$('.scrollslider-slider').width( sliderTotalWidth + '%')
+			that.allSlides.width( slideIndWidth + '%' )
+			
+			that.allSlides.each( function(){
 				
 				if( $(this).height() > pinSlideHeight ){
 					pinSlideHeight = $(this).height()
-					allSlides.height( pinSlideHeight )
+					that.allSlides.height( pinSlideHeight )
 				}
 				
 			})
 	
 			// Allow scrolling
 			that.setupScroll()
-		
+			
+			// Allow nav
+			if( that.numSlides > 1 )
+				that.setupNav()
+			
+			// Allow timer
+			if( that.timer == 1 && that.numSlides > 1 )
+				that.setupTimer()
 			
 			that.slider.on('scroll', function() {
 			  	that.slider.find('.the-content').each(function(){
@@ -50,7 +67,7 @@
 				})
 			})
 			
-			
+			that.navElements = $('.scrollslider-nav a')
 			// Allow Navigation
 			that.navElements.on( 'click', function(){
 				
@@ -84,6 +101,32 @@
 			
 		}
 		
+		, setupTimer: function(){
+			
+			var that = this
+			,	theTimer = '<div class="scrollslider-loader"></div>'
+			
+			$(theTimer).insertBefore( that.slider )
+			
+		}
+		
+		, setupNav: function(){
+			
+			var that = this
+			,	theNav = ''
+			
+			that.allSlides.each(function( index ){
+				
+				theClass = (index == 0) ? 'current' : ''
+				
+				theNav += sprintf('<a class="%s"><i class="icon-circle"></i></a>', theClass)
+				
+			})
+			
+			$(sprintf('<div class="scrollslider-nav">%s</div>', theNav)).insertAfter( that.slider )
+			
+		}
+		
 		, setupScroll: function(){
 			var that = this
 			
@@ -110,53 +153,63 @@
 			
 			var that = this
 			,	activeSlide = that.getCurrentSlide()
-			,	theLoader = $('.pinhead-loader')
+			,	theLoader = $('.scrollslider-loader')
 			
 			that.changeActiveNav( that.navElements.eq( activeSlide - 1 ) )
 
-			// clear animations
-			theLoader
-				.clearQueue()
-				.stop()
-				.css({ width: "0%" })
+			if( theLoader.length ){
+				
+				// clear animations
+				theLoader
+					.clearQueue()
+					.stop()
+					.css({ width: "0%" })
+
+				that.timerAnim()
+
+				that.slider.hover(
+					function(){
+						theLoader.clearQueue();
+					  	theLoader.stop();
+					}, 
+					function(){
+						that.timerAnim()
+					}
+				)
+				
+			}
+
 			
-			that.timerAnim()
-			
-			that.slider.hover(
-				function(){
-					theLoader.clearQueue();
-				  	theLoader.stop();
-				}, 
-				function(){
-					that.timerAnim()
-				}
-			)
 		}
 		
 		, timerAnim: function(){
 			
 			var that = this
-			,	theLoader = $('.pinhead-loader')
+			,	theLoader = $('.scrollslider-loader')
 			
-			// Allow Timer
-			theLoader
-				.animate({
-						width: "100%"
-					}
-					, {
-						duration: that.duration,
-						queue: false,
-						easing: "linear",
-						complete: function(){
-							
-							if( theLoader.attr('style') == 'width: 100%;' ){
-								theLoader.css('width', '0')
-								that.nextSlide()
-								that.noScrollEvent = true
-							}
+			if( theLoader.length ){
+			
+				// Allow Timer
+				theLoader
+					.animate({
+							width: "100%"
 						}
-					} 
-				)
+						, {
+							duration: that.duration,
+							queue: false,
+							easing: "linear",
+							complete: function(){
+							
+								if( theLoader.attr('style') == 'width: 100%;' ){
+									theLoader.css('width', '0')
+									that.nextSlide()
+									that.noScrollEvent = true
+								}
+							}
+						} 
+					)
+			
+			}
 		}
 		
 		, nextSlide: function(){
