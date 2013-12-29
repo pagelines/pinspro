@@ -3,7 +3,9 @@
 
 class PageLinesInstallTheme extends PageLinesInstall{
 
-	
+	/* 
+	 * This sets the global areas of the site's sections on theme activation. 
+	 */ 
 	function global_region_map(){
 		
 		$map = array(
@@ -28,6 +30,9 @@ class PageLinesInstallTheme extends PageLinesInstall{
 		
 	}
 
+	/* 
+	 * This sets the global option values on theme activation. 
+	 */
 	function set_global_options(){
 		
 		$options_array = array(
@@ -52,6 +57,10 @@ class PageLinesInstallTheme extends PageLinesInstall{
 		
 	}
 	
+	/* 
+	 * This adds or updates templates defined by a map on theme activation
+	 * Note that the user 'welcome' template on activation by default (unless otherwise specified)
+	 */
 	function page_templates(){
 		
 		$templates = array(
@@ -63,6 +72,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 		
 	}
 	
+	// Template Map
 	function template_pins(){
 		
 		$template['name'] = 'Pins Page';
@@ -127,6 +137,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 		return $template;
 	}
 	
+	// Template Map
 	function template_welcome(){
 		
 		$template['name'] = 'Welcome';
