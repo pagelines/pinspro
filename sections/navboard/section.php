@@ -28,6 +28,7 @@ class PLNavBoard extends PageLinesSection {
 	*/
    function section_template( $location = false ) {
 
+
 	?>
 	<div class="navboard-container fix">
 		

@@ -142,7 +142,7 @@
 				var ratio = ( (that.slider.scrollLeft() / that.slider.width()) % 1 === 0 ) ? true : false;
 				
 				if( ! that.noScrollEvent && ratio)
-					that.newSlideActive( 'scrollstop' )
+					that.newSlideActive()
 				else 
 					that.noScrollEvent = false
 			})
