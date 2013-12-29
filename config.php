@@ -10,7 +10,11 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	 */ 
 	function map_templates_to_pages(){
 		
+		
+		
 	}
+	
+	
 	
 	/* 
 	 * This sets the global areas of the site's sections on theme activation. 
@@ -64,6 +68,20 @@ class PageLinesInstallTheme extends PageLinesInstall{
 		
 		return $options_array;
 		
+	}
+	
+	
+	/* 
+	 * Sets the info for the draft page that is created on install. This is the page users are redirected to after activation.
+	 */
+	function activation_page_data(){
+		$page = array(
+			'post_title'	=> 'PinsPro Getting Started',
+			'post_name'		=> 'pinspro-getting-started',
+			'template'		=> 'welcome',
+		);
+		
+		return $data;
 	}
 	
 	/* 
