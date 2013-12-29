@@ -3,6 +3,15 @@
 
 class PageLinesInstallTheme extends PageLinesInstall{
 
+
+	/*
+	 * TODO MAP certain pages and page types to appropriate templates for the theme
+	 * 
+	 */ 
+	function map_templates_to_pages(){
+		
+	}
+	
 	/* 
 	 * This sets the global areas of the site's sections on theme activation. 
 	 */ 
@@ -59,7 +68,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	
 	/* 
 	 * This adds or updates templates defined by a map on theme activation
-	 * Note that the user 'welcome' template on activation by default (unless otherwise specified)
+	 * Note that the user is redirected to 'welcome' template on activation by default (unless otherwise specified)
 	 */
 	function page_templates(){
 		
