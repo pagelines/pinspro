@@ -22,15 +22,14 @@ class PageLinesInstallTheme extends PageLinesInstall{
 				),
 			)
 		);
-		
-	
+
 		// 404 Page
 		if( is_404() ){
 
 			$content = array( 'object' => 'PageLinesNoPosts' );
 
 		} 
-		
+
 		// Standard WP page default
 		elseif( is_page() ){
 
@@ -43,31 +42,34 @@ class PageLinesInstallTheme extends PageLinesInstall{
 			);
 
 		} 
-		
+
 		// Post Page 
 		elseif( is_single() ) {
 
 			$content = array(
+						array(
 							'object'	=> 'PLColumn',
-							'span' 	=> 8,
+							'span' 		=> 8,
 							'content'	=> array(
 								array(
 									'object'	=> 'PageLinesPostLoop'
 								),
 								array(
 									'object'	=> 'PageLinesComments'
-								),
+								)
 							)
 						),
-						$sidebar
+
+						$sidebar 
 					);
 
 		} 
-		
-		
+
+
 		// Overall Default 
 		else {
-			$content = array(
+			$content = array( 
+						array(
 							'object'	=> 'PLColumn',
 							'span' 	=> 8,
 							'content'	=> array(
@@ -120,7 +122,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	function set_global_options(){
 		
 		$options_array = array(
-			'page_background_image_url' 	=> '[pl_theme_url]/bg-repeat.png',
+			'page_background_image_url' 	=> '[pl_theme_url]/images/bg-repeat.png',
 			'page_background_image_repeat'	=> 'repeat',
 			'supersize_bg'					=> 0,
 			'content_width_px'				=> '1100px',
