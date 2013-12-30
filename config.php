@@ -8,7 +8,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	 * TODO MAP certain pages and page types to appropriate templates for the theme
 	 * 
 	 */ 
-	function default_template_handling(){
+	function default_template_handling( $t ){
 	
 		$sidebar = array(
 			'object'	=> 'PLColumn',
@@ -83,7 +83,9 @@ class PageLinesInstallTheme extends PageLinesInstall{
 		}
 
 
-		return array( 'content' => $content );
+		$t = array( 'content' => $content );
+	
+		return $t;
 		
 	}
 	
@@ -148,7 +150,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	 * Sets the info for the draft page that is created on install. This is the page users are redirected to after activation.
 	 */
 	function activation_page_data(){
-		$page = array(
+		$data = array(
 			'post_title'	=> 'PinsPro Getting Started',
 			'post_name'		=> 'pinspro-getting-started',
 			'template'		=> 'welcome',
