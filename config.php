@@ -8,9 +8,80 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	 * TODO MAP certain pages and page types to appropriate templates for the theme
 	 * 
 	 */ 
-	function map_templates_to_pages(){
+	function default_template_handling(){
+	
+		$sidebar = array(
+			'object'	=> 'PLColumn',
+			'span' 	=> 4,
+			'content'	=> array(
+				array(
+					'object'	=> 'PLRapidTabs'
+				),
+				array(
+					'object'	=> 'PrimarySidebar'
+				),
+			)
+		);
+		
+	
+		// 404 Page
+		if( is_404() ){
+
+			$content = array( 'object' => 'PageLinesNoPosts' );
+
+		} 
+		
+		// Standard WP page default
+		elseif( is_page() ){
+
+			$content = array(
+				array(
+					'object'	=> 'PageLinesPostLoop',
+					'span' 		=> 10,
+					'offset'	=> 1
+				)
+			);
+
+		} 
+		
+		// Post Page 
+		elseif( is_single() ) {
+
+			$content = array(
+							'object'	=> 'PLColumn',
+							'span' 	=> 8,
+							'content'	=> array(
+								array(
+									'object'	=> 'PageLinesPostLoop'
+								),
+								array(
+									'object'	=> 'PageLinesComments'
+								),
+							)
+						),
+						$sidebar
+					);
+
+		} 
 		
 		
+		// Overall Default 
+		else {
+			$content = array(
+							'object'	=> 'PLColumn',
+							'span' 	=> 8,
+							'content'	=> array(
+								array(
+									'object'	=> 'PageLinesPostLoop'
+								),
+							)
+						),
+						$sidebar
+					);
+		}
+
+
+		return array( 'content' => $content );
 		
 	}
 	
