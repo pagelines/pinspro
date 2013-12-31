@@ -3,10 +3,11 @@
 
 class PageLinesInstallTheme extends PageLinesInstall{
 
+	
 
 	/*
-	 * TODO MAP certain pages and page types to appropriate templates for the theme
-	 * 
+	 * This sets up the default configuration for differing page types
+	 * This filter will be used when no 'map' is set on a specific page. 
 	 */ 
 	function default_template_handling( $t ){
 	
@@ -26,7 +27,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 		// 404 Page
 		if( is_404() ){
 
-			$content = array( 'object' => 'PageLinesNoPosts' );
+				$content = array( 'object' => 'PageLinesNoPosts' );
 
 		} 
 
@@ -159,6 +160,29 @@ class PageLinesInstallTheme extends PageLinesInstall{
 		return $data;
 	}
 	
+	/*
+	 * 
+	 */ 
+	function map_templates_to_pages( ){
+		
+		$map = array(
+			'404_page'	=> 'Pins Blog',
+			'tag'		=> 'Pins Blog',
+			'search'	=> 'Pins Blog',
+			'category'	=> 'Pins Blog',
+			'author'	=> 'Pins Blog',
+			'archive'	=> 'Pins Blog',
+			'blog'		=> 'Pins Blog',
+			'page'		=> 'Pins Blog',
+			'post'		=> 'Pins Blog',
+		);
+		
+		return $map;
+		
+		
+	}
+	
+	
 	/* 
 	 * This adds or updates templates defined by a map on theme activation
 	 * Note that the user is redirected to 'welcome' template on activation by default (unless otherwise specified)
@@ -166,8 +190,9 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	function page_templates(){
 		
 		$templates = array(
-			$this->template_welcome(),
-			$this->template_pins()
+			'welcome' 	=> $this->template_welcome(),
+			'pins' 		=> $this->template_pins(),
+			'blog' 		=> $this->template_pins()
 		);
 				
 		return $templates;
@@ -187,7 +212,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 				'object'	=> 'PLSectionArea',
 				'settings'	=> array(
 					'pl_area_bg' 		=> 'pl-dark-img',
-					'pl_area_image'		=> '[pl_parent_url]/images/getting-started-mast-bg.jpg',
+					'pl_area_image'		=> '[pl_theme_url]/images/sunrise.jpg',
 					'pl_area_pad'		=> '80px',
 					'pl_area_parallax'	=> 1
 				),
@@ -197,7 +222,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 						'object'	=> 'PLMasthead',
 						'settings'	=> array(
 							'pagelines_masthead_title'		=> 'Congratulations!',
-							'pagelines_masthead_tagline'	=> 'You are up and running with PageLines DMS.',
+							'pagelines_masthead_tagline'	=> 'You are up and running with PageLines PinsPro.',
 							'pagelines_masthead_img'		=> '[pl_parent_url]/images/getting-started-pl-logo.png',
 							'masthead_button_link_1'		=> home_url(),
 							'masthead_button_text_1'		=> 'View Your Blog <i class="icon-angle-right"></i>',

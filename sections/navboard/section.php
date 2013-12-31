@@ -30,6 +30,7 @@ class PLNavBoard extends PageLinesSection {
 
 
 	?>
+	<div class="navboard-wrap">
 	<div class="navboard-container fix">
 		
 		<div class="navboard-left">
@@ -45,6 +46,7 @@ class PLNavBoard extends PageLinesSection {
 		<div class="navboard-center">
 			<a href="<?php echo home_url();?>"><img src="<?php echo PL_THEME_URL.'/logo.png'?>" /></a>
 		</div>
+	</div>
 	</div>
 <?php }
 
