@@ -27,7 +27,13 @@ class PageLinesInstallTheme extends PageLinesInstall{
 		// 404 Page
 		if( is_404() ){
 
-				$content = array( 'object' => 'PageLinesNoPosts' );
+				$content = array(
+					array(
+						'object'	=> 'PageLinesNoPosts',
+						'span' 		=> 10,
+						'offset'	=> 1
+					)
+				);
 
 		} 
 
@@ -154,7 +160,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 		$data = array(
 			'post_title'	=> 'PinsPro Getting Started',
 			'post_name'		=> 'pinspro-getting-started',
-			'template'		=> 'welcome',
+			'template'		=> 'pp-welcome',
 		);
 		
 		return $data;
@@ -166,15 +172,14 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	function map_templates_to_pages( ){
 		
 		$map = array(
-			'404_page'	=> 'Pins Blog',
-			'tag'		=> 'Pins Blog',
-			'search'	=> 'Pins Blog',
-			'category'	=> 'Pins Blog',
-			'author'	=> 'Pins Blog',
-			'archive'	=> 'Pins Blog',
-			'blog'		=> 'Pins Blog',
-			'page'		=> 'Pins Blog',
-			'post'		=> 'Pins Blog',
+			//'is_404'	=> 'pp-archive',
+			'tag'		=> 'pp-archive',
+			'search'	=> 'pp-archive',
+			'category'	=> 'pp-archive',
+			'author'	=> 'pp-archive',
+			'archive'	=> 'pp-archive',
+			'blog'		=> 'pp-blog',
+			'post'		=> 'pp-post',
 		);
 		
 		return $map;
@@ -190,9 +195,11 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	function page_templates(){
 		
 		$templates = array(
-			'welcome' 	=> $this->template_welcome(),
-			'pins' 		=> $this->template_pins(),
-			'blog' 		=> $this->template_pins()
+			'pp-welcome' 	=> $this->template_welcome(),
+			'pp-pins' 		=> $this->template_pins(),
+			'pp-blog' 		=> $this->template_blog(),
+			'pp-post' 		=> $this->template_post(),
+			'pp-archive'	=> $this->template_archive()
 		);
 				
 		return $templates;
@@ -200,11 +207,125 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	}
 	
 	// Template Map
+	function template_archive(){
+		
+		$template['key'] = 'pp-archive';
+		
+		$template['name'] = 'PinsPro | Archive Page';
+		
+		$template['desc'] = 'Template for archives and other listings.';
+		
+		$template['map'] = array(
+			array(
+				'object'	=> 'PLPageHeader',
+				'settings'	=> array(),
+
+			),
+			array(
+				'object'	=> 'PLSectionArea',
+
+				'content'	=> array(
+					array(
+						'object'	=> 'PLPostPins',
+					),
+				)
+			),
+		); 
+		
+		return $template;
+	}
+	
+	// Template Map
+	function template_blog(){
+		
+		$template['key'] = 'pp-blog';
+		
+		$template['name'] = 'PinsPro | Blog Page';
+		
+		$template['desc'] = 'Used on blog pages.';
+		
+		$template['map'] = array(
+			array(
+				'object'	=> 'PLPageHeader',
+				'settings'	=> array(),
+
+			),
+			array(
+				'object'	=> 'PLSectionArea',
+
+				'content'	=> array(
+					array(
+						'object'	=> 'PinBlog',
+					),
+				)
+			),
+		); 
+		
+		return $template;
+	}
+	
+	// Template Map
+	function template_post(){
+		
+		$template['key'] = 'pp-post';
+		
+		$template['name'] = 'PinsPro | Single Post';
+		
+		$template['desc'] = 'Used on single post pages.';
+		
+		$template['map'] = array(
+			array(
+				'object'	=> 'PLSectionArea',
+
+				'content'	=> array(
+					array(
+						'object'	=> 'PinBlog',
+					),
+					array(
+						'object'	=> 'PageLinesComments',
+						'span'		=> 8,
+					),
+				)
+			),
+		); 
+		
+		return $template;
+	}
+	
+	// Template Map
 	function template_pins(){
 		
-		$template['name'] = 'Pins Page';
+		$template['key'] = 'pp-pins';
+		
+		$template['name'] = 'PinsPro | Pins List';
 		
 		$template['desc'] = 'A page with pins style posts and scrollable feature slider.';
+		
+		$template['map'] = array(
+			
+			array(
+				'object'	=> 'PLScrollSlider',
+				'settings'	=> array(),
+				
+			),
+			array(
+				'object'	=> 'PLPostPins',
+				'settings'	=> array(),
+				
+			),
+		); 
+		
+		return $template;
+	}
+	
+	// Template Map
+	function template_welcome(){
+		
+		$template['key'] = 'pp-welcome';
+		
+		$template['name'] = 'PinsPro | Welcome';
+		
+		$template['desc'] = 'Getting started guide &amp; template.';
 		
 		$template['map'] = array(
 			
@@ -222,75 +343,11 @@ class PageLinesInstallTheme extends PageLinesInstall{
 						'object'	=> 'PLMasthead',
 						'settings'	=> array(
 							'pagelines_masthead_title'		=> 'Congratulations!',
-							'pagelines_masthead_tagline'	=> 'You are up and running with PageLines PinsPro.',
+							'pagelines_masthead_tagline'	=> 'You are up and running with PinsPro by PageLines',
 							'pagelines_masthead_img'		=> '[pl_parent_url]/images/getting-started-pl-logo.png',
 							'masthead_button_link_1'		=> home_url(),
 							'masthead_button_text_1'		=> 'View Your Blog <i class="icon-angle-right"></i>',
-						)
-					),
-				)
-			),
-			array(
-				'content'	=> array(
-					array(
-						'object'	=> 'pliBox',
-						'settings'	=> array(
-							'ibox_array'	=> array(
-								array(
-									'title'	=> 'Quick Start',
-									'text'	=> 'New to PageLines? Get started fast with PageLines DMS Quick Start guide...',
-									'icon'	=> 'rocket',
-									'link'	=> 'http://www.pagelines.com/quickstart/'
-								),
-								array(
-									'title'	=> 'Forum',
-									'text'	=> 'Have questions? We are happy to help, just search or post on PageLines Forum.',
-									'icon'	=> 'comment',
-									'link'	=> 'http://forum.pagelines.com/'
-								),
-								array(
-									'title'	=> 'Docs',
-									'text'	=> 'Time to dig in. Check out the Docs for specifics on creating your dream website.',
-									'icon'	=> 'file-text',
-									'link'	=> 'http://docs.pagelines.com/'
-								),
-							)
-						)
-					),
-				)
-			)
-		); 
-		
-		return $template;
-	}
-	
-	// Template Map
-	function template_welcome(){
-		
-		$template['name'] = 'Welcome';
-		
-		$template['desc'] = 'Getting started guide &amp; template.';
-		
-		$template['map'] = array(
-			
-			array(
-				'object'	=> 'PLSectionArea',
-				'settings'	=> array(
-					'pl_area_bg' 		=> 'pl-dark-img',
-					'pl_area_image'		=> '[pl_parent_url]/images/getting-started-mast-bg.jpg',
-					'pl_area_pad'		=> '80px',
-					'pl_area_parallax'	=> 1
-				),
-				
-				'content'	=> array(
-					array(
-						'object'	=> 'PLMasthead',
-						'settings'	=> array(
-							'pagelines_masthead_title'		=> 'Congratulations!',
-							'pagelines_masthead_tagline'	=> 'You are up and running with PageLines DMS.',
-							'pagelines_masthead_img'		=> '[pl_parent_url]/images/getting-started-pl-logo.png',
-							'masthead_button_link_1'		=> home_url(),
-							'masthead_button_text_1'		=> 'View Your Blog <i class="icon-angle-right"></i>',
+							'masthead_button_theme_1'		=> 'btn-flat',
 						)
 					),
 				)

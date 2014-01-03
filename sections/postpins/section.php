@@ -158,54 +158,62 @@ class PLPostPins extends PageLinesSection {
 		
 		$pins = $this->load_posts($number_of_pins, $page, $category, $post_type);
 
-		foreach( $pins as $key => $p ){
-
-			if(has_post_thumbnail($p->ID) && get_the_post_thumbnail($p->ID) != ''){
-				$thumb = get_the_post_thumbnail($p->ID, $image_size );
-
-				$check = strpos( $thumb, 'data-lazy-src' );
-				if( $check ) {
-					// detected lazy-loader.
-					$thumb = preg_replace( '#\ssrc="[^"]*"#', '', $thumb );
-					$thumb = str_replace( 'data-lazy-', '', $thumb );
-				}
-				$image = sprintf('<div class="pin-img-wrap"><a class="pin-img" href="%s">%s</a></div>', get_permalink( $p->ID ), $thumb);
-			} else
-				$image = '';
-				
+		if( !empty( $pins) ){
 		
-			$author_name = get_the_author();
-			$default_avatar = PL_IMAGES . '/avatar_default.gif';
-			$author_desc = custom_trim_excerpt( get_the_author_meta('description', $p->post_author), 10);
-			$author_email = get_the_author_meta('email', $p->post_author);
-			$avatar = get_avatar( $author_email, '32' );
+			foreach( $pins as $key => $p ){
+				$post = $p;
+				if(has_post_thumbnail($p->ID) && get_the_post_thumbnail($p->ID) != ''){
+					$thumb = get_the_post_thumbnail($p->ID, $image_size );
+
+					$check = strpos( $thumb, 'data-lazy-src' );
+					if( $check ) {
+						// detected lazy-loader.
+						$thumb = preg_replace( '#\ssrc="[^"]*"#', '', $thumb );
+						$thumb = str_replace( 'data-lazy-', '', $thumb );
+					}
+					$image = sprintf('<div class="pin-img-wrap"><a class="pin-img" href="%s">%s</a></div>', get_permalink( $p->ID ), $thumb);
+				} else
+					$image = '';
 
 
-			$meta_bottom = sprintf(
-				'<div class="media fix"><div class="img">%s</div><div class="bd pin-meta subtext"><strong>%s</strong> <br/> %s </div></div>',
-				$avatar,
-				ucwords	( $author_name ),
-				do_shortcode( $special_meta )
-				
-			);
+				$author_name = get_the_author();
+				$default_avatar = PL_IMAGES . '/avatar_default.gif';
+				$author_desc = custom_trim_excerpt( get_the_author_meta('description', $p->post_author), 10);
+				$author_email = get_the_author_meta('email', $p->post_author);
+				$avatar = get_avatar( $author_email, '32' );
 
-			$content = sprintf(
-				'<div class="postpin-pad"><h4 class="headline pin-title"><a href="%s">%s</a></h4><div class="pin-excerpt summary">%s %s</div></div><div class="postpin-pad pin-bottom">%s</div>',
+
+				$meta_bottom = sprintf(
+					'<div class="media fix"><div class="img">%s</div><div class="bd pin-meta subtext"><strong>%s</strong> <br/> %s </div></div>',
+					$avatar,
+					ucwords	( $author_name ),
+					do_shortcode( $special_meta )
+
+				);
+
+				$content = sprintf(
+					'<div class="postpin-pad"><h4 class="headline pin-title"><a href="%s">%s</a></h4><div class="pin-excerpt summary">%s %s</div></div><div class="postpin-pad pin-bottom">%s</div>',
+
+					get_permalink( $p->ID ),
+					$p->post_title,
+					custom_trim_excerpt($p->post_content, 25),
+					pledit($p->ID),
+					$meta_bottom
+				);
+
+				$out .= sprintf(
+					'<div class="postpin-wrap" style="width: %spx;"><article class="postpin">%s%s</article></div>',
+					$pin_width - 18,
+					$image,
+					$content
+				);
+			}
 			
-				get_permalink( $p->ID ),
-				$p->post_title,
-				custom_trim_excerpt($p->post_content, 25),
-				pledit($p->ID),
-				$meta_bottom
-			);
-
-			$out .= sprintf(
-				'<div class="postpin-wrap" style="width: %spx;"><article class="postpin">%s%s</article></div>',
-				$pin_width - 18,
-				$image,
-				$content
-			);
+			
+		} else {
+			echo pl_posts_404();
 		}
+
 		
 		$u = add_query_arg('pins', $page + 1, pl_current_url());
 
@@ -249,12 +257,17 @@ class PLPostPins extends PageLinesSection {
 
 		$query['paged'] = $page;
 
+		// Search page
+		if( isset( $_GET['s'] ) && $_GET['s'] != '' )
+			$query['s'] = $_GET['s'];
+		
 		$query['showposts'] = $number;
 		
 		$query['post_type'] = $post_type;
 
 		$q = new WP_Query($query);
 
+	
 		return $q->posts;
 	}
 

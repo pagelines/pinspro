@@ -24,12 +24,12 @@ class PLPageHeader extends PageLinesSection {
 					array(
 						'key'			=> 'pl_pageheader_head',
 						'type' 			=> 'text',
-						'label' 		=> __( 'Highlight Header (Optional)', 'pagelines' ),
+						'label' 		=> __( 'Header Text (Optional)', 'pagelines' ),
 					),
 					array(
 						'key'			=> 'pl_pageheader_subhead',
 						'type' 			=> 'text',
-						'label' 		=> __( 'Highlight Subhead (Optional)', 'pagelines' ),
+						'label' 		=> __( 'Sub Head Text (Optional)', 'pagelines' ),
 					)
 
 				), 
