@@ -86,7 +86,9 @@ class PinBlog extends PageLinesSection {
 						
 					</div>
 					<div class="the-footer">
-						<a href=""><i class="icon-comments"></i> 10</a>
+						<a href="#comments">
+							<i class="icon-comments"></i> <?php comments_number( '0', '1', '%s' ); ?>
+						</a>
 						<?php echo pl_love(); ?>
 					</div>
 				</div>
