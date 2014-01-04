@@ -82,7 +82,7 @@ class PLPageHeader extends PageLinesSection {
 		
 		} elseif( is_search() ){
 			
-			return sprintf( '%s "%s"', __( 'Search results for', 'pagelines' ), get_search_query() );
+			return '';
 			
 		} elseif( is_tag() ){
 			
@@ -134,7 +134,7 @@ class PLPageHeader extends PageLinesSection {
 		 	return __('Category', 'pagelines');
 		
 		elseif( is_search() )
-		 	return __('Search', 'pagelines');
+		 	return sprintf( '%s "%s"', __( 'Search results for', 'pagelines' ), get_search_query() );
 		
 		elseif( is_tag() )
 		 	return __('Tag', 'pagelines');
