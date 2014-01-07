@@ -11,18 +11,6 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	 */ 
 	function default_template_handling( $t ){
 	
-		$sidebar = array(
-			'object'	=> 'PLColumn',
-			'span' 	=> 4,
-			'content'	=> array(
-				array(
-					'object'	=> 'PLRapidTabs'
-				),
-				array(
-					'object'	=> 'PrimarySidebar'
-				),
-			)
-		);
 
 		// 404 Page
 		if( is_404() ){
@@ -37,56 +25,15 @@ class PageLinesInstallTheme extends PageLinesInstall{
 
 		} 
 
-		// Standard WP page default
-		elseif( is_page() ){
-
+		// Overall Default 
+		else {
 			$content = array(
 				array(
 					'object'	=> 'PageLinesPostLoop',
-					'span' 		=> 10,
-					'offset'	=> 1
+	
 				)
 			);
-
-		} 
-
-		// Post Page 
-		elseif( is_single() ) {
-
-			$content = array(
-						array(
-							'object'	=> 'PLColumn',
-							'span' 		=> 8,
-							'content'	=> array(
-								array(
-									'object'	=> 'PageLinesPostLoop'
-								),
-								array(
-									'object'	=> 'PageLinesComments'
-								)
-							)
-						),
-
-						$sidebar 
-					);
-
-		} 
-
-
-		// Overall Default 
-		else {
-			$content = array( 
-						array(
-							'object'	=> 'PLColumn',
-							'span' 	=> 8,
-							'content'	=> array(
-								array(
-									'object'	=> 'PageLinesPostLoop'
-								),
-							)
-						),
-						$sidebar
-					);
+			
 		}
 
 

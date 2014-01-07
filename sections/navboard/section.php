@@ -14,8 +14,49 @@ class PLNavBoard extends PageLinesSection {
 	function section_opts(){
 
 		$opts = array(
+			array(
+				'type'	=> 'multi',
+				'key'	=> 'navboard_format', 
+				'title'	=> 'Navboard Format and Formatting',
+				'opts'	=> array(
+					array(
+						'type'	=> 'select',
+						'key'	=> 'navboard_format', 
+						'label'	=> 'Select Format',
+						'opts'	=> array(
+							'center_logo'	=> array( 'name' => 'Logo Center, Pop out menu' ),
+							'left_logo'		=> array( 'name' => 'Logo Left, standard menu' ),
+						), 
+
+					)
+				)
+				
+			),
+			array(
+				'type'	=> 'multi',
+				'key'	=> 'navboard_content', 
+				'title'	=> 'Navboard Content',
+				'col'	=> 2,
+				'opts'	=> array(
+					array(
+						'type'	=> 'image_upload',
+						'key'	=> 'navboard_logo', 
+						'label'	=> 'Select Format',
+						'opts'	=> array(
+							'center_logo'	=> 'Center: Logo | Right: Pop Menu | Left: Site Search',
+							'left_logo'		=> 'Left: Logo | Right: Standard Menu',
+						), 
+					),
+					array(
+						'key'	=> 'navboard_menu', 
+						'type'	=> 'select_menu',
+						'key'	=> 'navboard_menu', 
+						'label'	=> 'Select Menu',
+					)
+				)
+				
+			)
 			
-		
 
 		);
 
