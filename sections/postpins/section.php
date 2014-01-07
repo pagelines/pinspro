@@ -28,13 +28,7 @@ class PLPostPins extends PageLinesSection {
 					'type' 			=> 'multi',
 					'title' 		=> __( 'Pins Configuration', 'pagelines' ),
 					'opts'			=> array(
-						array(
-							'key'		=> 'pins_number',
-							'type' 		=> 'text_small',
-							'label' 	=> __( 'Number of Pins To Load', 'pagelines' ),
-							'title' 	=> __( 'Number of Pins to Load', 'pagelines' ),
-							'place'		=> 15,
-						),
+					
 						
 						array(
 							'key'		=> 'pins_width',
@@ -137,7 +131,7 @@ class PLPostPins extends PageLinesSection {
 
 
 		$category = ($this->opt('pins_category' )) ? $this->opt('pins_category') : null;
-		$post_type = ($this->opt('pins_post_type' )) ? $this->opt('pins_post_type') : 'post';
+		$post_type = ($this->opt('pins_post_type' )) ? $this->opt('pins_post_type') : null;
 
 		$number_of_pins = ($this->opt('pins_number' )) ? $this->opt('pins_number') : 15;
 
@@ -155,8 +149,15 @@ class PLPostPins extends PageLinesSection {
 		$page = (isset($_GET['pins']) && $_GET['pins'] != 1) ? $_GET['pins'] : 1;
 		
 		$out = '';
+			// 	
+			// if( (is_category() || is_archive() || is_search() || is_author() ) && empty( $category ) && $post_type == 'post')
+			// 	$pins = $wp_query->posts;
+			// else 
+			// 	
+			
+			$pins = $this->load_posts($page, $category, $post_type);
+
 		
-		$pins = $this->load_posts($number_of_pins, $page, $category, $post_type);
 
 		if( !empty( $pins) ){
 		
@@ -216,8 +217,15 @@ class PLPostPins extends PageLinesSection {
 
 		
 		$u = add_query_arg('pins', $page + 1, pl_current_url());
-
+		
+		// just to see if we should show link
 		$next_posts = $this->load_posts($number_of_pins, $page + 1, $category, $post_type);
+			
+		
+		
+		
+
+		
 
 		if( !empty($next_posts) ){
 
@@ -249,21 +257,24 @@ class PLPostPins extends PageLinesSection {
 		);
 	}
 
-	function load_posts( $number = 20, $page = 1, $category = null, $post_type = 'post'){
+	function load_posts( $page = 1, $category = null, $post_type = null){
+		
 		$query = array();
+		
+		$query['paged'] = $page;
 
 		if( isset($category) && !empty($category) )
 			$query['category_name'] = $category;
-
-		$query['paged'] = $page;
+			
+		if( isset($post_type) && !empty($post_type) )
+			$query['post_type'] = $post_type;
 
 		// Search page
 		if( isset( $_GET['s'] ) && $_GET['s'] != '' )
 			$query['s'] = $_GET['s'];
 		
-		$query['showposts'] = $number;
+		//$query['showposts'] = $number;
 		
-		$query['post_type'] = $post_type;
 
 		$q = new WP_Query($query);
 

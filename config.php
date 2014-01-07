@@ -204,6 +204,9 @@ class PageLinesInstallTheme extends PageLinesInstall{
 					array(
 						'object'	=> 'PinBlog',
 					),
+					array(
+						'object'	=> 'PageLinesPagination',
+					),
 				)
 			),
 		); 
