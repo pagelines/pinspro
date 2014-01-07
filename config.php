@@ -335,7 +335,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 					'pl_area_bg' 		=> 'pl-dark-img',
 					'pl_area_image'		=> '[pl_theme_url]/images/sunrise.jpg',
 					'pl_area_pad'		=> '80px',
-					'pl_area_parallax'	=> 1
+					'pl_area_parallax'	=> 'pl-parallax'
 				),
 				
 				'content'	=> array(
