@@ -70,24 +70,24 @@ class PLNavBoard extends PageLinesSection {
    function section_template( $location = false ) {
 
 
+		$logo = ( $this->opt('navboard_logo') ) ? $this->opt('navboard_logo') : PL_THEME_URL.'/logo.png'; 
+		$menu = ( $this->opt('navboard_menu') ) ? $this->opt('navboard_menu') : false;
+		$format = ( $this->opt('navboard_format') ) ? $this->opt('navboard_format') : false; 
+
 	?>
-	<div class="navboard-wrap">
-	<div class="navboard-container fix">
+	<div class="navboard-wrap fix">
 		
-		<div class="navboard-left">
+		<div class="navboard-left navboard-container">
 			<?php pagelines_search_form( true, 'navboard-searchform'); ?>
-			
 		</div>
 		
 		<div class="navboard-right">
-			<div class="menu-toggle btn mm-toggle">
-				<i class="icon-reorder"></i>
-			</div>
+			<?php echo pl_navigation( $menu ); ?>
+			
 		</div>
-		<div class="navboard-center">
-			<a href="<?php echo home_url();?>"><img src="<?php echo PL_THEME_URL.'/logo.png'?>" /></a>
+		<div class="navboard-center navboard-container">
+			<a href="<?php echo home_url();?>"><img src="<?php echo $logo; ?>" /></a>
 		</div>
-	</div>
 	</div>
 <?php }
 
