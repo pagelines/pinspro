@@ -62,8 +62,7 @@
 	
 }
 
-	.postpin, 
-	.fetchlink a{
+	.postpin{
 		box-shadow: 0 1px 4px rgba(0,0,0,.3);	
 	}
 	
@@ -81,9 +80,15 @@
 		a{
 			display: inline-block;
 			padding: 5px 40px;
-
+			border: 2px solid @pl-link;
 			margin: 8px;
-			.box-shadow(0 1px 4px rgba(0,0,0,.3));	
+			
+			font-weight: 600;
+			opacity: .3;
+			border-radius: 4px;
+			&:hover{
+				opacity: 1;
+			}
 			.pin-img, 
 			.pin-img img{
 				max-width: 100%;

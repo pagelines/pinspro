@@ -79,7 +79,7 @@
 						
 						theLoadLink
 							.addClass('loading')
-							.text('Loading...');
+							.html('<i class="icon-refresh icon-spin spin-fast"></i> &nbsp;  Loading...');
 							
 						$.ajax({
 							type: "GET",

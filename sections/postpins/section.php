@@ -219,12 +219,9 @@ class PLPostPins extends PageLinesSection {
 		$u = add_query_arg('pins', $page + 1, pl_current_url());
 		
 		// just to see if we should show link
-		$next_posts = $this->load_posts($number_of_pins, $page + 1, $category, $post_type);
+		$next_posts = $this->load_posts( $page + 1, $category, $post_type);
 			
 		
-		
-		
-
 		
 
 		if( !empty($next_posts) ){
@@ -233,7 +230,7 @@ class PLPostPins extends PageLinesSection {
 
 			$display = ($class == 'iscroll') ? 'style="display: none"' : '';
 
-			$next_url = sprintf('<div class="%s fetchlink" %s><a class="btn" href="%s">%s</a></div>', $class, $display, $u, __('Load More Posts', 'pagelines'));
+			$next_url = sprintf('<div class="%s fetchlink" %s><a class="" href="%s">%s</a></div>', $class, $display, $u, __('Load More Posts', 'pagelines'));
 
 		} else
 			$next_url = '';
