@@ -84,7 +84,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 			'content_width_px'				=> '1100px',
 			'linkcolor'						=> '#D30000',
 			'text_primary'					=> '#000000',
-			'bodybg'						=> '#E3E3E3',
+			'bodybg'						=> '#e3e6e2',
 			'layout_mode'					=> 'pixel',
 			'layout_display_mode'			=> 'display-full',
 			'font_primary'					=> 'helvetica',
