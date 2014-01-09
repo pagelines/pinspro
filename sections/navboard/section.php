@@ -14,29 +14,29 @@ class PLNavBoard extends PageLinesSection {
 	function section_opts(){
 
 		$opts = array(
-			array(
-				'type'	=> 'multi',
-				'key'	=> 'navboard_format', 
-				'title'	=> 'Navboard Format and Formatting',
-				'opts'	=> array(
-					array(
-						'type'	=> 'select',
-						'key'	=> 'navboard_format', 
-						'label'	=> 'Select Format',
-						'opts'	=> array(
-							'center_logo'	=> array( 'name' => 'Logo Center, Pop out menu' ),
-							'left_logo'		=> array( 'name' => 'Logo Left, standard menu' ),
-						), 
-
-					)
-				)
-				
-			),
+			// array(
+			// 				'type'	=> 'multi',
+			// 				'key'	=> 'navboard_format', 
+			// 				'title'	=> 'Navboard Format and Formatting',
+			// 				'opts'	=> array(
+			// 					array(
+			// 						'type'	=> 'select',
+			// 						'key'	=> 'navboard_format', 
+			// 						'label'	=> 'Select Format',
+			// 						'opts'	=> array(
+			// 							'center_logo'	=> array( 'name' => 'Logo Center, Pop out menu' ),
+			// 							'left_logo'		=> array( 'name' => 'Logo Left, standard menu' ),
+			// 						), 
+			// 
+			// 					)
+			// 				)
+			// 				
+			// 			),
 			array(
 				'type'	=> 'multi',
 				'key'	=> 'navboard_content', 
 				'title'	=> 'Navboard Content',
-				'col'	=> 2,
+				'col'	=> 1,
 				'opts'	=> array(
 					array(
 						'type'	=> 'image_upload',
@@ -76,10 +76,10 @@ class PLNavBoard extends PageLinesSection {
 
 		$logo = ( $this->opt('navboard_logo') ) ? $this->opt('navboard_logo') : PL_THEME_URL.'/logo.png'; 
 		$menu = ( $this->opt('navboard_menu') ) ? $this->opt('navboard_menu') : false;
-		$format = ( $this->opt('navboard_format') ) ? $this->opt('navboard_format') : false; 
+		$hide_search = ( $this->opt('navboard_search') ) ? 'hide-search' : false; 
 
 	?>
-	<div class="navboard-wrap fix">
+	<div class="navboard-wrap <?php echo $hide_search; ?> fix">
 		<div class="navboard-center navboard-container">
 			<a href="<?php echo home_url();?>"><img src="<?php echo $logo; ?>" /></a>
 		</div>
