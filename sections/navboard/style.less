@@ -17,6 +17,7 @@
 	.navboard-right, 
 	.navboard-left{
 		position: absolute;
+		top: 0;
 	}
 	.navboard-right{
 		right: 0; 
@@ -42,6 +43,19 @@
 		border-left: 1px solid #eee;
 		&:hover{
 			background: #f7f7f7;
+		}
+	}
+	
+	@media (max-width: @resPortraitTablet) {
+		.navboard-wrap{
+			height: auto;
+		} 
+		.navboard-left{
+			display: none;
+		}
+		.navboard-center{
+
+			float: left;
 		}
 	}
 }

@@ -41,7 +41,7 @@ class PLNavBoard extends PageLinesSection {
 					array(
 						'type'	=> 'image_upload',
 						'key'	=> 'navboard_logo', 
-						'label'	=> 'Select Format',
+						'label'	=> 'Navboard Logo',
 						'opts'	=> array(
 							'center_logo'	=> 'Center: Logo | Right: Pop Menu | Left: Site Search',
 							'left_logo'		=> 'Left: Logo | Right: Standard Menu',
@@ -50,8 +50,12 @@ class PLNavBoard extends PageLinesSection {
 					array(
 						'key'	=> 'navboard_menu', 
 						'type'	=> 'select_menu',
-						'key'	=> 'navboard_menu', 
 						'label'	=> 'Select Menu',
+					),
+					array(
+						'key'	=> 'navboard_search', 
+						'type'	=> 'check',
+						'label'	=> 'Hide Search?',
 					)
 				)
 				
@@ -76,18 +80,19 @@ class PLNavBoard extends PageLinesSection {
 
 	?>
 	<div class="navboard-wrap fix">
-		
-		<div class="navboard-left navboard-container">
-			<?php pagelines_search_form( true, 'navboard-searchform'); ?>
+		<div class="navboard-center navboard-container">
+			<a href="<?php echo home_url();?>"><img src="<?php echo $logo; ?>" /></a>
 		</div>
-		
 		<div class="navboard-right">
 			<?php echo pl_navigation( $menu ); ?>
 			
 		</div>
-		<div class="navboard-center navboard-container">
-			<a href="<?php echo home_url();?>"><img src="<?php echo $logo; ?>" /></a>
+		<div class="navboard-left navboard-container">
+			<?php pagelines_search_form( true, 'navboard-searchform'); ?>
 		</div>
+		
+		
+		
 	</div>
 <?php }
 
