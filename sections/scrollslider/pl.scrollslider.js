@@ -119,7 +119,7 @@
 				
 				theClass = (index == 0) ? 'current' : ''
 				
-				theNav += sprintf('<a class="%s"><i class="icon-circle"></i></a>', theClass)
+				theNav += sprintf('<a class="%s"><i class="icon icon-circle"></i></a>', theClass)
 				
 			})
 			
