@@ -87,7 +87,7 @@ class PinBlog extends PageLinesSection {
 					</div>
 					<div class="the-footer">
 						<a href="#comments">
-							<i class="icon-comments"></i> <?php comments_number( '0', '1', '%s' ); ?>
+							<i class="icon icon-comments"></i> <?php comments_number( '0', '1', '%s' ); ?>
 						</a>
 						<?php echo do_shortcode( '[pl_karma]' ); ?>
 					</div>
