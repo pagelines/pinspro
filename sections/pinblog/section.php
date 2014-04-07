@@ -35,7 +35,6 @@ class PinBlog extends PageLinesSection {
 	
 	function get_article(){
 		
-		global $post;
 		?>
 		<div class="row fix">
 			<div class="span9">
@@ -43,8 +42,8 @@ class PinBlog extends PageLinesSection {
 				<article class="article <?php echo join(' ', get_post_class()); ?>">
 					<?php  if( is_single() ): ?>
 						<div class="the-nav fix">
-							<span class="previous"><?php previous_post_link('%link', '<i class="icon icon-angle-left"></i> %title') ?></span>
-							<span class="next"><?php next_post_link('%link', '%title <i class="icon icon-angle-right"></i>') ?></span>
+							<span class="previous"><?php previous_post_link('%link', '<i class="icon-angle-left"></i> %title') ?></span>
+							<span class="next"><?php next_post_link('%link', '%title <i class="icon-angle-right"></i>') ?></span>
 						</div>
 					<?php endif; ?>
 					<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'aspect-thumb' ); ?></a>
@@ -61,7 +60,7 @@ class PinBlog extends PageLinesSection {
 					</div>
 					<div class="the-footer fix">
 						<?php  if( ! is_single() ): ?>
-							<a href="<?php the_permalink(); ?>">Read More <i class="icon icon-angle-right"></i></a>
+							<a href="<?php the_permalink(); ?>">Read More <i class="icon-angle-right"></i></a>
 						<?php else: ?>
 							<?php previous_post_link('%link', 'Next article: %title') ?>
 						<?php endif; ?>
@@ -88,13 +87,9 @@ class PinBlog extends PageLinesSection {
 					</div>
 					<div class="the-footer">
 						<a href="#comments">
-							<i class="icon icon-comments"></i> <?php comments_number( '0', '1', '%s' ); ?>
+							<i class="icon-comments"></i> <?php comments_number( '0', '1', '%s' ); ?>
 						</a>
-<<<<<<< HEAD
-						<?php do_shortcode( '[pl_karma]' ); ?>
-=======
-						<?php echo do_shortcode( sprintf( '[pl_karma post="%s"]', $post->ID ) ); ?>
->>>>>>> 84aeb6fd03fe40a1c6258a5cf194b9d5d0993589
+						<?php echo do_shortcode( '[pl_karma]' ); ?>
 					</div>
 				</div>
 			</div>
