@@ -89,7 +89,7 @@ class PinBlog extends PageLinesSection {
 						<a href="#comments">
 							<i class="icon-comments"></i> <?php comments_number( '0', '1', '%s' ); ?>
 						</a>
-						<?php echo pl_love(); ?>
+						<?php do_shortcode( '[pl_karma]' ); ?>
 					</div>
 				</div>
 			</div>
