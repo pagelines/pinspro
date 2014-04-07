@@ -90,7 +90,11 @@ class PinBlog extends PageLinesSection {
 						<a href="#comments">
 							<i class="icon icon-comments"></i> <?php comments_number( '0', '1', '%s' ); ?>
 						</a>
+<<<<<<< HEAD
+						<?php do_shortcode( '[pl_karma]' ); ?>
+=======
 						<?php echo do_shortcode( sprintf( '[pl_karma post="%s"]', $post->ID ) ); ?>
+>>>>>>> 84aeb6fd03fe40a1c6258a5cf194b9d5d0993589
 					</div>
 				</div>
 			</div>
