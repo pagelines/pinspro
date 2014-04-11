@@ -129,8 +129,11 @@ class PLPostPins extends PageLinesSection {
 		global $wp_query;
 		global $post;
 
-
-		$category = ($this->opt('pins_category' )) ? $this->opt('pins_category') : null;
+		if( is_archive() )
+			$category = $wp_query->query_vars['category_name'];
+		else
+			$category = ($this->opt('pins_category' )) ? $this->opt('pins_category') : null;
+		
 		$post_type = ($this->opt('pins_post_type' )) ? $this->opt('pins_post_type') : null;
 
 		$number_of_pins = ($this->opt('pins_number' )) ? $this->opt('pins_number') : 15;
