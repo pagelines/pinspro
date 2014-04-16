@@ -283,7 +283,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 				'object'	=> 'PLSectionArea',
 				'settings'	=> array(
 					'pl_area_bg' 		=> 'pl-dark-img',
-					'pl_area_image'		=> '[pl_theme_url]/images/sunrise.jpg',
+					'pl_area_image'		=> '[pl_theme_url]/images/slide01.jpg',
 					'pl_area_pad'		=> '80px',
 					'pl_area_parallax'	=> 'pl-parallax'
 				),
@@ -292,8 +292,9 @@ class PageLinesInstallTheme extends PageLinesInstall{
 					array(
 						'object'	=> 'PLMasthead',
 						'settings'	=> array(
-							'pagelines_masthead_title'		=> 'Congratulations!',
-							'pagelines_masthead_tagline'	=> 'You are up and running with PinsPro by PageLines',
+							'pagelines_masthead_title'		=> 'Welcome to PinsPro',
+							'pagelines_masthead_tagline'	=> 'A tidy pin-board style theme for the PageLines DMS framework. 
+It\'s responsive too so it looks great everywhere.',
 							'pagelines_masthead_img'		=> '[pl_parent_url]/images/getting-started-pl-logo.png',
 							'masthead_button_link_1'		=> home_url(),
 							'masthead_button_text_1'		=> 'View Your Blog <i class="icon-angle-right"></i>',
