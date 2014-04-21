@@ -3,151 +3,134 @@
 	Section: PageHeader
 	Author: PageLines
 	Author URI: http://www.pagelines.com
-	Description: Adds an editable header to the page. If unset on archive pages, will show appropriate description for the page. 
+	Description: A dynamic page header area that supports image background and sub navigation.
 	Class Name: PLPageHeader
-	Filter: component, full-width
+	Filter: full-width, component
+	Loading: active
 */
-
 
 class PLPageHeader extends PageLinesSection {
 
-
-
+	
 	function section_opts(){
-		$opts = array(
-			
-			array(
-				'type' 			=> 'multi',
-				'col'			=> 1,
-				'title' 		=> __( 'PageHeader Text', 'pagelines' ),
+		$options = array();
+		
+	//	$options['config']	= array();
+		$options['config'] = array(
+			'title' => __( 'Header Config', 'pagelines' ),
+			'type'	=> 'multi',
+			'opts'	=> array(
+				
+				array(
+					'key'			=> 'ph_format',
+					'label' 		=> __( 'Format', 'pagelines' ),
+					'type'			=> 'select',
+					'opts'	=> array(
+						'format-standard'	=> array('name'=> 'Text On Left'),
+						'format-center'		=> array('name'=> 'Centered'),
+					)
+				),
+				array(
+					'key'			=> 'ph_mode',
+					'label' 		=> __( 'Mode', 'pagelines' ),
+					'type'			=> 'select',
+					'opts'	=> array(
+						'nav'	=> array('name'=> 'Use Nav Menu'),
+						'links'	=> array('name'=> 'Use Link Buttons'),
+					)
+				),
+				array(
+					'key'			=> 'ph_pad_class',
+					'type' 			=> 'select_padding',
+					'label' 		=> __( 'Header Top/Bottom Padding in px', 'pagelines' ),
+				),
+			)
+		);
+		$options['content'] = array(
+			'title' => __( 'Header Text', 'pagelines' ),
+			'type'	=> 'multi',
+			'col'	=> 2,
+			'opts'	=> array(
+				array(
+					'key'			=> 'ph_header',
+					'type' 			=> 'text',
+					'label' 		=> __( 'Header Text', 'pagelines' ),
+				),
+				array(
+					'key'			=> 'ph_sub',
+					'type' 			=> 'text',
+					'label' 		=> __( 'Header Sub Text', 'pagelines' ),
+				),
+			)
+		);
+		
+		$options['meta'] = array(
+				'title' => __( 'Header Meta', 'pagelines' ),
+				'type'	=> 'multi',
+				'col'	=> 2,
 				'opts'	=> array(
 					array(
-						'key'			=> 'pl_pageheader_head',
-						'type' 			=> 'text',
-						'label' 		=> __( 'Header Text (Optional)', 'pagelines' ),
+						'key'			=> 'ph_menu',
+						'type' 			=> 'select_menu',
+						'label' 		=> __( 'Header Menu (menu mode only)', 'pagelines' ),
 					),
 					array(
-						'key'			=> 'pl_pageheader_subhead',
-						'type' 			=> 'text',
-						'label' 		=> __( 'Sub Head Text (Optional)', 'pagelines' ),
-					)
+						'key'			=> 'ph_link1',
+						'type' 			=> 'button_link',
+						'label' 		=> __( 'Header Link 1 (link mode only)', 'pagelines' ),
+					),
+					array(
+						'key'			=> 'ph_link2',
+						'type' 			=> 'button_link',
+						'label' 		=> __( 'Header Link 2 (link mode only)', 'pagelines' ),
+					),
+				)			
+		); 
 
-				), 
-				'help'	=> 'Optionally adjust the text for the header. On archive pages this will default to showing information about the archive.'
-			),
-		
-
-		);
-
-		return $opts;
+		return $options;
 
 	}
 	
+	function before_section_template( $location = '' ) {
+
+		$this->wrapper_classes['special'] = 'pl-scroll-translate'; 
+
+	}
+	
+
 	function section_template() {
-
-		$head = $this->opt('pl_pageheader_head', $this->tset);
-		$subhead = $this->opt('pl_pageheader_subhead', $this->tset);
-
-		if( ! $head && ! $subhead ){
-			$head = $this->get_header();
-			$subhead = $this->get_subhead();
-		}
 		
-		if( ! $head && ! $subhead )
-			$head = 'Hello.';
-
+		global $post;
+		
+		$title = ( $this->opt('ph_header') ) ? $this->opt('ph_header') : pl_smart_page_title();
+		$text = ( $this->opt('ph_sub') ) ? $this->opt('ph_sub') : pl_smart_page_subtitle();
+		
+		$mode = ( $this->opt('ph_mode') ) ? $this->opt('ph_mode') : 'link';
+		
+		$container_class = array();
+		$container_class[] = $this->opt('ph_format'); 
+		$container_class[] = 'vpad-' . $this->opt('ph_pad_class'); 
+		
+		
 		?>
-		<div class="page-header-wrap">
-			<?php
-			if( $head )
-				printf('<h2 class="page-header-head" data-sync="pl_pageheader_head">%s</h2>', $head );
-
-			if( $subhead )
-				printf('<div class="page-header-subhead" data-sync="pl_pageheader_subhead">%s</div>', $subhead );
-			?>
+		<div class="pl-ph-container pl-area-wrap  pl-animation pl-slidedown fix <?php echo join(' ', $container_class);?>" >
+			<div class="pl-end-height pl-content fix pl-centerer" style="">
+				<div class="ph-text">
+					<h2 class="ph-head" data-sync="ph_header"><?php echo $title; ?></h2>
+					<div class="ph-sub" ata-sync="ph_sub"><?php echo $text; ?></div>
+				</div>
+				<div class="ph-meta pl-centered">
+					<?php 
+					
+						echo pl_get_button_link('ph_link1', $this); 
+						echo pl_get_button_link('ph_link2', $this); 
+					
+						
+					 ?>
+				</div>
+			</div>
 		</div>
 	<?php
 
 	}
-	
-	function get_subhead(){
-		
-		if( is_home() ){
-			
-			return __('The latest news, thoughts, and insights.', 'pagelines');
-			
-		} elseif( is_category() ){
-			
-			return sprintf( '%s "%s"', __( 'Currently viewing the category:', 'pagelines' ), single_cat_title( false, false ) );
-		
-		} elseif( is_search() ){
-			
-			return '';
-			
-		} elseif( is_tag() ){
-			
-			return sprintf( '%s "%s"', __( 'Currently viewing the tag:', 'pagelines' ), single_tag_title( false, false ) );
-		
-		} elseif( is_archive() ){
-			
-			if (is_author()) {
-				global $author;
-				global $author_name;
-				$curauth = ( isset( $_GET['author_name'] ) ) ? get_user_by( 'slug', $author_name ) : get_userdata( intval( $author ) );
-				$out = sprintf( '%s <strong>"%s"</strong>', __( 'Posts by:', 'pagelines' ), $curauth->display_name );
-			} elseif ( is_day() ) {
-				$out = sprintf( '%s <strong>"%s"</strong>', __( 'From the daily archives:', 'pagelines' ), get_the_time('l, F j, Y') );
-			} elseif ( is_month() ) {
-				$out = sprintf( '%s <strong>"%s"</strong>', __( 'From the monthly archives:', 'pagelines' ), get_the_time('F Y') );
-			} elseif ( is_year() ) {
-				$out = sprintf( '%s <strong>"%s"</strong>', __( 'From the yearly archives:', 'pagelines' ), get_the_time('Y') );
-			} else {
-				
-				if ( is_post_type_archive() )
-					$title =  post_type_archive_title( null,false );
-					
-				if ( ! isset( $title ) ) {
-					$o = get_queried_object();
-					if ( isset( $o->name ) )
-						$title = $o->name;
-				}
-				
-				if ( ! isset( $title ) )
-					$title = the_date();
-					
-				$out = sprintf( '%s <strong>"%s"</strong>', __( 'Viewing archives for ', 'pagelines'), $title );
-			}
-			
-			return $out;
-			
-		} else
-			return false;
-	}
-	
-	function get_header(){
-		
-		
-		if( is_home() )
-		 	return __('Blog', 'pagelines');
-		
-		elseif( is_category() )
-		 	return __('Category', 'pagelines');
-		
-		elseif( is_search() )
-		 	return sprintf( '%s "%s"', __( 'Search results for', 'pagelines' ), get_search_query() );
-		
-		elseif( is_tag() )
-		 	return __('Tag', 'pagelines');
-		
-		elseif( is_author() )
-		 	return __('Author', 'pagelines');
-		
-		elseif( is_archive() )
-		 	return __('Archive', 'pagelines');
-		
-		else
-			return false;
-
-	}
-
 }
