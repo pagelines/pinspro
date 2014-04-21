@@ -117,25 +117,11 @@ class PLScrollSlider extends PageLinesSection {
 			
 			$slide_array = array(
 				array(
-					'bg'	=> $this->base_url . '/image-3.jpg',
-					'title'	=> 'New York City, New York',
-					'sub'	=> 'The Big Apple',
-					'link'		=> 'http://en.wikipedia.org/wiki/New_York_City',
-					'btn_text'	=> 'Read More'
-				),
-				array(
-					'bg'		=> $this->base_url . '/image-1.jpg',
-					'title'		=> 'San Francisco, California',
-					'sub'		=> 'The beautiful city by the bay',
-					'link'		=> 'http://en.wikipedia.org/wiki/California_Street_(San_Francisco)',
-					'btn_text'	=> 'Read More'
-				),
-				array(
-					'bg'	=> $this->base_url . '/image-2.jpg',
-					'title'	=> 'Paris, France',
-					'sub'	=> 'The city of love and lights.',
-					'link'		=> 'http://en.wikipedia.org/wiki/Paris',
-					'btn_text'	=> 'Read More'
+					'bg'	=> $this->base_url . '/image-1.jpg',
+					'title'	=> 'ScrollSlider',
+					'sub'	=> 'Congrats! You have successfully installed this slider. Now just set it up.',
+					'link'		=> 'http://www.pagelines.com/',
+					'btn_text'	=> 'Visit PageLines.com'
 				),
 				
 			);
