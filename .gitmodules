@@ -6,7 +6,7 @@
 	url = https://github.com/pagelines/flipper
 [submodule "sections/docker"]
 	path = sections/docker
-	url = https://github.com/pagelines/docker
+	url = git@github.com:pagelines/docker.git
 [submodule "sections/hero"]
 	path = sections/hero
 	url = https://github.com/pagelines/hero
