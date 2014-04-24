@@ -64,3 +64,6 @@
 [submodule "sections/testimonials"]
 	path = sections/testimonials
 	url = https://github.com/pagelines/testimonials
+[submodule "sections/socialinks"]
+	path = sections/socialinks
+	url = https://github.com/pagelines/socialinks
