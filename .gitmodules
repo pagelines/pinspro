@@ -1,3 +1,6 @@
 [submodule "dms"]
 	path = dms
 	url = git@github.com:pagelines/DMS.git
+[submodule "sections/flipper"]
+	path = sections/flipper
+	url = https://github.com/pagelines/flipper
