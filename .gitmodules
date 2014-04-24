@@ -4,3 +4,63 @@
 [submodule "sections/flipper"]
 	path = sections/flipper
 	url = https://github.com/pagelines/flipper
+[submodule "sections/docker"]
+	path = sections/docker
+	url = https://github.com/pagelines/docker
+[submodule "sections/hero"]
+	path = sections/hero
+	url = https://github.com/pagelines/hero
+[submodule "sections/icallout"]
+	path = sections/icallout
+	url = https://github.com/pagelines/icallout
+[submodule "sections/maps"]
+	path = sections/maps
+	url = https://github.com/pagelines/maps
+[submodule "sections/masonic"]
+	path = sections/masonic
+	url = https://github.com/pagelines/masonic
+[submodule "sections/masthead"]
+	path = sections/masthead
+	url = https://github.com/pagelines/masthead
+[submodule "sections/navi"]
+	path = sections/navi
+	url = https://github.com/pagelines/navi
+[submodule "sections/pageheader"]
+	path = sections/pageheader
+	url = https://github.com/pagelines/pageheader
+[submodule "sections/popshot"]
+	path = sections/popshot
+	url = https://github.com/pagelines/popshot
+[submodule "sections/popthumbs"]
+	path = sections/popthumbs
+	url = https://github.com/pagelines/popthumbs
+[submodule "sections/propricing"]
+	path = sections/propricing
+	url = https://github.com/pagelines/propricing
+[submodule "sections/quickcarousel"]
+	path = sections/quickcarousel
+	url = https://github.com/pagelines/quickcarousel
+[submodule "sections/quickslider"]
+	path = sections/quickslider
+	url = https://github.com/pagelines/quickslider
+[submodule "sections/rapidtabs"]
+	path = sections/rapidtabs
+	url = https://github.com/pagelines/rapidtabs
+[submodule "sections/revslider"]
+	path = sections/revslider
+	url = https://github.com/pagelines/revslider
+[submodule "sections/scrollspy"]
+	path = sections/scrollspy
+	url = https://github.com/pagelines/scrollspy
+[submodule "sections/secondnav"]
+	path = sections/secondnav
+	url = https://github.com/pagelines/secondnav
+[submodule "sections/sharebar"]
+	path = sections/sharebar
+	url = https://github.com/pagelines/sharebar
+[submodule "sections/starbars"]
+	path = sections/starbars
+	url = https://github.com/pagelines/starbars
+[submodule "sections/testimonials"]
+	path = sections/testimonials
+	url = https://github.com/pagelines/testimonials
