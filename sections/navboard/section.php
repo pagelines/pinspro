@@ -5,7 +5,7 @@
 	Author URI: http://www.pagelines.com
 	Description: A stylized navigation bar with multiple modes and styles. 
 	Class Name: PLNavBoard
-	Filter: nav, dual-width
+	Filter: nav, full-width
 */
 
 
@@ -14,24 +14,6 @@ class PLNavBoard extends PageLinesSection {
 	function section_opts(){
 
 		$opts = array(
-			// array(
-			// 				'type'	=> 'multi',
-			// 				'key'	=> 'navboard_format', 
-			// 				'title'	=> 'Navboard Format and Formatting',
-			// 				'opts'	=> array(
-			// 					array(
-			// 						'type'	=> 'select',
-			// 						'key'	=> 'navboard_format', 
-			// 						'label'	=> 'Select Format',
-			// 						'opts'	=> array(
-			// 							'center_logo'	=> array( 'name' => 'Logo Center, Pop out menu' ),
-			// 							'left_logo'		=> array( 'name' => 'Logo Left, standard menu' ),
-			// 						), 
-			// 
-			// 					)
-			// 				)
-			// 				
-			// 			),
 			array(
 				'type'	=> 'multi',
 				'key'	=> 'navboard_content', 
@@ -84,15 +66,22 @@ class PLNavBoard extends PageLinesSection {
 			<a href="<?php echo home_url();?>"><img src="<?php echo $logo; ?>" /></a>
 		</div>
 		<div class="navboard-right">
-			<?php echo pl_navigation( $menu ); ?>
+			<?php 
+
+					$menu_args = array(
+						'theme_location' => 'navboard_nav',
+						'menu' => $menu,
+						'menu_class'	=> 'inline-list pl-nav sf-menu',
+					);
+					echo pl_navigation( $menu_args );
+ 			?>
+			
 			
 		</div>
 		<div class="navboard-left navboard-container">
 			<?php pagelines_search_form( true, 'navboard-searchform'); ?>
 		</div>
-		
-		
-		
+	
 	</div>
 <?php }
 
