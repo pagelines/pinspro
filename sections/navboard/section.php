@@ -28,6 +28,7 @@ class PLNavBoard extends PageLinesSection {
 							'search_logo_nav'	=> array('name' => 'SEARCH left, LOGO center, NAV right'),
 							'nav_logo_search'	=> array('name' => 'NAV left, LOGO center, SEARCH right'),
 							'logo_nav'			=> array('name' => 'LOGO left, NAV right'),
+							'nav_logo_nav'		=> array('name' => 'NAV left, LOGO center, NAV2 right'),
 						), 
 					),
 					array(
@@ -54,6 +55,11 @@ class PLNavBoard extends PageLinesSection {
 						'type'	=> 'select_menu',
 						'label'	=> 'Select Menu',
 					),
+					array(
+						'key'	=> 'navboard_menu_2', 
+						'type'	=> 'select_menu',
+						'label'	=> 'Select Menu (Two Nav Mode Only!)',
+					),
 				)
 				
 			)
@@ -72,7 +78,10 @@ class PLNavBoard extends PageLinesSection {
 
 		$format = ( $this->opt('navboard_format') ) ? $this->opt('navboard_format') : 'search_logo_nav'; 
 		$logo = ( $this->opt('navboard_logo') ) ? $this->opt('navboard_logo') : PL_THEME_URL.'/logo.png'; 
+		
 		$menu = ( $this->opt('navboard_menu') ) ? $this->opt('navboard_menu') : false;
+		
+		
 		$hide_search = ( $this->opt('navboard_search') ) ? 'hide-search' : false; 
 
 		$logo_markup = sprintf('<div class="navboard-container"><a href="%s"><img src="%s" alt="%s" /></a></div>', home_url(), $logo, get_bloginfo('name') ); 
@@ -87,6 +96,9 @@ class PLNavBoard extends PageLinesSection {
 		);
 		$nav = pl_navigation( $menu_args );
 		
+		
+	
+		
 		if( $format == 'nav_logo_search' ){
 			$left = $nav;
 			$right = $search;
@@ -95,6 +107,26 @@ class PLNavBoard extends PageLinesSection {
 			$left = $logo_markup;
 			$right = $nav;
 			$center = '';
+		} else if( $format == 'nav_logo_nav' ){
+			
+			$menu_2 = ( $this->opt('navboard_menu_2') ) ? $this->opt('navboard_menu_2') : false;
+			
+			if( $menu_2 ){
+				
+				
+				$menu_args = array(
+					'theme_location' => 'navboard_nav_2',
+					'menu' => $menu,
+					'menu_class'	=> 'inline-list pl-nav sf-menu',
+				);
+
+				$nav2 = pl_navigation( $menu_args );
+			} else 
+				$nav2 = '';
+			
+			$left = $nav;
+			$right = $nav2;
+			$center = $logo_markup;
 		} else {
 			$left = $search;
 			$right = $nav;
