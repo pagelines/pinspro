@@ -62,7 +62,7 @@ class PLScrollSlider extends PageLinesSection {
 			'opts'	=> array(
 				array(
 					'key'		=> 'bg',
-					'label'		=> __( 'Background Image', 'pagelines' ),
+					'label'		=> __( 'Background Image (Required)', 'pagelines' ),
 					'type'		=> 'image_upload',
 					'sizelimit'	=> 2097152,
 				),
@@ -77,14 +77,14 @@ class PLScrollSlider extends PageLinesSection {
 					'type'	=> 'text'
 				),
 				array(
-					'key'		=> 'link',
-					'label'		=> __( 'Button Link (Required for Button)', 'pagelines' ),
-					'type'		=> 'text'
+					'key'			=> 'link',
+					'type' 			=> 'button_link',
+					'label' 		=> __( 'Button Link 1', 'pagelines' ),
 				),
 				array(
-					'key'		=> 'btn_text',
-					'label'		=> __( 'Button Text (Optional)', 'pagelines' ),
-					'type'		=> 'text'
+					'key'			=> 'link2',
+					'type' 			=> 'button_link',
+					'label' 		=> __( 'Button Link 2', 'pagelines' ),
 				),
 				array(
 					'key'		=> 'overlay',
@@ -106,14 +106,66 @@ class PLScrollSlider extends PageLinesSection {
 		
 	}
 	
+	function slides_output( $array ){
+		$out = '';
+		
+		$count = 1;
+		
+		if( is_array( $array ) ){
+			foreach( $array as $slide ){
+
+				$the_bg = pl_array_get( 'bg', $slide ); 
+
+				if( $the_bg ){
+
+					$the_sub = pl_array_get( 'sub', $slide ); 
+					$the_title = pl_array_get( 'title', $slide ); 
+					$the_class = pl_array_get( 'class', $slide );
+
+					$the_class .= ( pl_array_get( 'overlay', $slide ) && pl_array_get( 'overlay', $slide ) != 0 ) ? ' slide-overlay' : '';
+
+					$the_text = sprintf('<div class="the-text"><h2 class="header">%s</h2><div class="sub">%s</div></div>', $the_title, $the_sub);
+
+					$link = pl_array_get( 'link', $slide ); 
+					$link_text = pl_array_get( 'link_text', $slide, __('More', 'pagelines') ); 
+					$link_style = pl_array_get( 'link_style', $slide, 'btn-ol-white' ); 
+
+					$link_2 = pl_array_get( 'link_2', $slide ); 
+					$link_2_text = pl_array_get( 'link_2_text', $slide, __('Check it out', 'pagelines') ); 
+					$link_2_style = pl_array_get( 'link_2_style', $slide, 'btn-info' );
+
+					$link = ( $link ) ? sprintf('<a href="%s" class="btn btn-large slider-btn %s">%s</a>', $link, $link_style, $link_text) : false;
+					$link_2 = ( $link_2 ) ? sprintf('<a href="%s" class="btn btn-large slider-btn %s">%s</a>', $link_2, $link_2_style, $link_2_text) : false;
+
+					$buttons = ($link || $link_2) ? sprintf( '<div class="slider-buttons">%s %s</div>', $link, $link_2 ) : '';
+
+					$content = sprintf('<div class="the-content">%s %s</div>', $the_text, $buttons);
+
+					$out .= sprintf(
+						'<div class="slide %s" id="slide-%s" style="background-image: url(%s)">%s</div>', 
+						$the_class, 
+						$count, 
+						$the_bg, 
+						$content
+					);
+				}
+
+
+				$count++;
+			}
+		}
+		
+	
+		return $out;
+	}
 	
    function section_template() {
 	
 		$slide_array = $this->opt('sfs_array');
 		
-		$slides = '';
+		$slides = $this->slides_output( $slide_array );
 	
-		if( ! is_array($slide_array) ){
+		if( $slides == '' ){
 			
 			$slide_array = array(
 				array(
@@ -126,43 +178,11 @@ class PLScrollSlider extends PageLinesSection {
 				
 			);
 			
-		}
-		
-		
-		$count = 1;
-		foreach( $slide_array as $slide ){
-
-			$the_bg = pl_array_get( 'bg', $slide ); 
+			$slides = $this->slides_output( $slide_array );
 			
-			if( $the_bg ){
-				
-				$the_sub = pl_array_get( 'sub', $slide ); 
-				$the_title = pl_array_get( 'title', $slide ); 
-				$the_link = pl_array_get( 'link', $slide );
-				$btn_text = pl_array_get( 'btn_text', $slide );
-				$the_class = pl_array_get( 'class', $slide );
-
-				$the_class .= ( pl_array_get( 'overlay', $slide ) && pl_array_get( 'overlay', $slide ) != 0 ) ? ' slide-overlay' : '';
-
-				
-				$the_button = ($the_link) ? sprintf('<a href="%s" class="btn btn-large btn-flat">%s</a>', $the_link, $btn_text) : '';
-
-				$the_text = sprintf('<div class="the-text"><h2 class="header">%s</h2><div class="sub">%s</div></div>', $the_title, $the_sub);
-
-				$content = sprintf('<div class="the-content">%s %s</div>', $the_text, $the_button);
-
-				$slides .= sprintf(
-					'<div class="slide %s" id="slide-%s" style="background-image: url(%s)">%s</div>', 
-					$the_class, 
-					$count, 
-					$the_bg, 
-					$content
-				);
-			}
-		
-			
-			$count++;
 		}
+
+		
 	
 		
 		$duration = ( $this->opt('sfs_duration') ) ? $this->opt('sfs_duration') : '10000';

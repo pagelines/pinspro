@@ -13,91 +13,101 @@
 	$.plScrollSlider = {
 
 		init: function( ){
-			
 			var that = this
-			,	pinSlideHeight = 0
-		
 			
-			that.allSlides = $('.scrollslider-holder .slide')
-			
-			that.slider = $('.scrollslider-holder')
-			
-			
-			
-			that.numSlides = that.allSlides.length
-			
-			that.duration = (that.slider.data('duration')) ? that.slider.data('duration') : 10000
-			that.transition = (that.slider.data('transition')) ? that.slider.data('transition') : 800
-			
-			that.timer = (that.slider.data('timer')) ? that.slider.data('timer') : 1
-		
-			// Setup Slide Dimensions
-			var sliderTotalWidth = that.numSlides * 100
-			,	slideIndWidth = 100 / that.numSlides
-			
-			$('.scrollslider-slider').width( sliderTotalWidth + '%')
-			that.allSlides.width( slideIndWidth + '%' )
-			
-			that.allSlides.each( function(){
+			$('.scrollslider-holder').each(function(){
 				
-				if( $(this).height() > pinSlideHeight ){
-					pinSlideHeight = $(this).height()
-					that.allSlides.height( pinSlideHeight )
-				}
-				
-			})
-	
-			// Allow scrolling
-			that.setupScroll()
-			
-			// Allow nav
-			if( that.numSlides > 1 )
-				that.setupNav()
-			
-			// Allow timer
-			if( that.timer == 1 && that.numSlides > 1 )
-				that.setupTimer()
-			
-			that.slider.on('scroll', function() {
-			  	that.slider.find('.the-content').each(function(){
-				
-					var theOff = ($(this).parent().position().left) / 3 
-					
-					$(this).css('margin-left', theOff)
-				})
-			})
-			
-			that.navElements = $('.scrollslider-nav a')
-			// Allow Navigation
-			that.navElements.on( 'click', function(){
-				
-				event.preventDefault();
+				var pinSlideHeight = 0
 
-				// Get "1" from "#slide-1", for example
-				var position = $(this).index() + 1;
+				that.container = $(this).parent()
+				that.slider = $(this)
 
-				that.slider
-					.clearQueue()
-					.stop()
+				that.allSlides = that.slider.find('.slide')
+				
+				
 
-				that.slider.animate({
-						scrollLeft: (position - 1) * that.slider.width()
+				that.numSlides = that.allSlides.length
+
+				that.duration = (that.slider.data('duration')) ? that.slider.data('duration') : 10000
+				that.transition = (that.slider.data('transition')) ? that.slider.data('transition') : 800
+
+				that.timer = (that.slider.data('timer')) ? that.slider.data('timer') : 1
+
+				// Setup Slide Dimensions
+				var sliderTotalWidth = that.numSlides * 100
+				,	slideIndWidth = 100 / that.numSlides
+
+				$('.scrollslider-slider').width( sliderTotalWidth + '%')
+				
+				that.allSlides.width( slideIndWidth + '%' )
+
+				that.allSlides.each( function(){
+
+					if( $(this).height() > pinSlideHeight ){
+						pinSlideHeight = $(this).height()
+						that.allSlides.height( pinSlideHeight )
 					}
-					, {
-						duration: that.transition,
-						complete: function(){
 
-							that.newSlideActive()
+				})
+
+				// Allow scrolling
+				that.setupScroll()
+
+				// Allow nav
+				if( that.numSlides > 1 )
+					that.setupNav()
+
+				// Allow timer
+				if( that.timer == 1 && that.numSlides > 1 )
+					that.setupTimer()
+					
+				that.navElements = that.container.find('.scrollslider-nav a')
+
+				that.slider.on('scroll', function() {
+				  	that.slider.find('.the-content').each(function(){
+
+						var theOff = ($(this).parent().position().left) / 3 
+
+						$(this).css('margin-left', theOff)
+					})
+				})
+
+				
+				// Allow Navigation
+				that.navElements.on( 'click', function(){
+
+					event.preventDefault();
+
+					// Get "1" from "#slide-1", for example
+					var position = $(this).index() + 1;
+
+					that.slider
+						.clearQueue()
+						.stop()
+
+					that.slider.animate({
+							scrollLeft: (position - 1) * that.slider.width()
 						}
-					} 
-				)
+						, {
+							duration: that.transition,
+							complete: function(){
 
-				that.changeActiveNav( $(this) )
+								that.newSlideActive()
+							}
+						} 
+					)
+
+					that.changeActiveNav( $(this) )
+
+				})
+
+
+				that.newSlideActive( 'start' )
+				
 				
 			})
 			
-	
-			that.newSlideActive( 'start' )
+			
 			
 		}
 		
