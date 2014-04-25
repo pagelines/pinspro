@@ -16,29 +16,44 @@ class PLNavBoard extends PageLinesSection {
 		$opts = array(
 			array(
 				'type'	=> 'multi',
-				'key'	=> 'navboard_content', 
+				'key'	=> 'navboard_config', 
 				'title'	=> 'Navboard Content',
 				'col'	=> 1,
 				'opts'	=> array(
 					array(
-						'type'	=> 'image_upload',
-						'key'	=> 'navboard_logo', 
-						'label'	=> 'Navboard Logo',
+						'type'	=> 'select',
+						'key'	=> 'navboard_format', 
+						'label'	=> 'Navboard Format',
 						'opts'	=> array(
-							'center_logo'	=> 'Center: Logo | Right: Pop Menu | Left: Site Search',
-							'left_logo'		=> 'Left: Logo | Right: Standard Menu',
+							'search_logo_nav'	=> array('name' => 'SEARCH left, LOGO center, NAV right'),
+							'nav_logo_search'	=> array('name' => 'NAV left, LOGO center, SEARCH right'),
+							'logo_nav'			=> array('name' => 'LOGO left, NAV right'),
 						), 
-					),
-					array(
-						'key'	=> 'navboard_menu', 
-						'type'	=> 'select_menu',
-						'label'	=> 'Select Menu',
 					),
 					array(
 						'key'	=> 'navboard_search', 
 						'type'	=> 'check',
 						'label'	=> 'Hide Search?',
 					)
+				)
+				
+			),
+			array(
+				'type'	=> 'multi',
+				'key'	=> 'navboard_content', 
+				'title'	=> 'Navboard Content',
+				'col'	=> 2,
+				'opts'	=> array(
+					array(
+						'type'	=> 'image_upload',
+						'key'	=> 'navboard_logo', 
+						'label'	=> 'Navboard Logo',
+					),
+					array(
+						'key'	=> 'navboard_menu', 
+						'type'	=> 'select_menu',
+						'label'	=> 'Select Menu',
+					),
 				)
 				
 			)
@@ -55,31 +70,48 @@ class PLNavBoard extends PageLinesSection {
 	*/
    function section_template( $location = false ) {
 
-
+		$format = ( $this->opt('navboard_format') ) ? $this->opt('navboard_format') : 'search_logo_nav'; 
 		$logo = ( $this->opt('navboard_logo') ) ? $this->opt('navboard_logo') : PL_THEME_URL.'/logo.png'; 
 		$menu = ( $this->opt('navboard_menu') ) ? $this->opt('navboard_menu') : false;
 		$hide_search = ( $this->opt('navboard_search') ) ? 'hide-search' : false; 
 
+		$logo_markup = sprintf('<div class="navboard-container"><a href="%s"><img src="%s" alt="%s" /></a></div>', home_url(), $logo, get_bloginfo('name') ); 
+
+		$search = sprintf('<div class="navboard-container">%s</div>', pagelines_search_form( false, 'navboard-searchform') ); 
+		
+		
+		$menu_args = array(
+			'theme_location' => 'navboard_nav',
+			'menu' => $menu,
+			'menu_class'	=> 'inline-list pl-nav sf-menu',
+		);
+		$nav = pl_navigation( $menu_args );
+		
+		if( $format == 'nav_logo_search' ){
+			$left = $nav;
+			$right = $search;
+			$center = $logo_markup;
+		} else if( $format == 'logo_nav' ){
+			$left = $logo_markup;
+			$right = $nav;
+			$center = '';
+		} else {
+			$left = $search;
+			$right = $nav;
+			$center = $logo_markup; 
+		}
+			
+		
 	?>
 	<div class="navboard-wrap <?php echo $hide_search; ?> fix">
-		<div class="navboard-center navboard-container">
-			<a href="<?php echo home_url();?>"><img src="<?php echo $logo; ?>" /></a>
+		<div class="navboard-center">
+			<?php echo $center; ?>
 		</div>
 		<div class="navboard-right">
-			<?php 
-
-					$menu_args = array(
-						'theme_location' => 'navboard_nav',
-						'menu' => $menu,
-						'menu_class'	=> 'inline-list pl-nav sf-menu',
-					);
-					echo pl_navigation( $menu_args );
- 			?>
-			
-			
+			<?php echo $right; ?>
 		</div>
-		<div class="navboard-left navboard-container">
-			<?php pagelines_search_form( true, 'navboard-searchform'); ?>
+		<div class="navboard-left ">
+			<?php echo $left; ?>
 		</div>
 	
 	</div>
