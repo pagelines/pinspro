@@ -124,7 +124,7 @@ class PLScrollSlider extends PageLinesSection {
 
 					$the_class .= ( pl_array_get( 'overlay', $slide ) && pl_array_get( 'overlay', $slide ) != 0 ) ? ' slide-overlay' : '';
 
-					$the_text = sprintf('<div class="the-text"><h2 class="header">%s</h2><div class="sub">%s</div></div>', $the_title, $the_sub);
+					$the_text = ($the_title || $the_sub) ? sprintf('<div class="the-text"><h2 class="header">%s</h2><div class="sub">%s</div></div>', $the_title, $the_sub) : '';
 
 					$link = pl_array_get( 'link', $slide ); 
 					$link_text = pl_array_get( 'link_text', $slide, __('More', 'pagelines') ); 
