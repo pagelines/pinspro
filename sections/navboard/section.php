@@ -17,7 +17,7 @@ class PLNavBoard extends PageLinesSection {
 			array(
 				'type'	=> 'multi',
 				'key'	=> 'navboard_config', 
-				'title'	=> 'Navboard Content',
+				'title'	=> 'Navboard Format',
 				'col'	=> 1,
 				'opts'	=> array(
 					array(
