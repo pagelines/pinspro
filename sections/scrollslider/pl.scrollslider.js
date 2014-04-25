@@ -66,7 +66,7 @@
 				that.slider.on('scroll', function() {
 				  	that.slider.find('.the-content').each(function(){
 
-						var theOff = ($(this).parent().position().left) / 3 
+						var theOff = ($(this).parent().position().left) / .6 
 
 						$(this).css('margin-left', theOff)
 					})
