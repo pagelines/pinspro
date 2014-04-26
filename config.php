@@ -3,7 +3,6 @@
 
 class PageLinesInstallTheme extends PageLinesInstall{
 
-	
 
 	/*
 	 * This sets up the default configuration for differing page types
