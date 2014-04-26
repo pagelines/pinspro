@@ -145,7 +145,7 @@ class PLNavBoard extends PageLinesSection {
 		<div class="navboard-left ">
 			<?php echo $left; ?>
 		</div>
-	
+		<div class="clear"></div>
 	</div>
 <?php }
 

@@ -28,14 +28,23 @@
 	&.multi-post .pl-new-loop .post,
 	&.multi-post .pl-new-loop .page{
 		background: #fff;
-		padding-top: 25px;
-		padding-bottom: 25px;
+		padding: 25px;
 		.box-sizing( border-box );
 		box-shadow: 0 1px 4px rgba(0,0,0,.4);
 		border-radius: 4px;
 		margin-bottom: 30px;
+	
+	}
+	.pl-new-loop .hentry{
+		&.post, 
+		&.multi-post {
+			padding-left: 100px;
+		}
 	}
 	
+}
+.section-postloop .pl-social-icon i{
+	color: #ccc;
 }
 
 .section-pindivider hr{
@@ -51,4 +60,21 @@
 	.pl-social-icon i{
 		color: @textColorLight;
 	}
+}
+
+@media (max-width: @resPortraitTablet) {
+	
+	.section-postloop{
+		.metahead {
+			top: 0;
+			left: 0;
+		}
+		&.single-post,
+		&.multi-post .pl-new-loop .post,
+		&.multi-post .pl-new-loop .page{
+
+			padding: 25px;
+		}
+	}
+	
 }
