@@ -1,9 +1,6 @@
 .section-pinblog{
-	.pinblog-meta, 
-	.pinblog-article{
-		
-	}
-	.article,
+	
+	article,
 	.meta{
 		overflow: hidden;
 		background: #fff; 
@@ -11,6 +8,12 @@
 		border-radius: 4px;
 		margin-bottom: 20px;
 		.box-sizing(border-box);
+		.metamedia{
+			.wp-video, 
+			.wp-video .mejs-video{
+				width: 100% !important;
+			}
+		}
 		.the-nav{
 			#gradient > .vertical( #fff, #f7f7f7 ); 
 			border-bottom: 1px solid #ccc; 
@@ -65,10 +68,15 @@
 		}
 		.the-footer{
 			border-top: 1px solid #ddd;
+			[class*="_pin_it_button"]{
+				margin-right: 20px !important;
+			}
 			> .hint,
 			> a{
-				
+				border:none;
 				border-right: 1px solid #ddd;
+				height: 21px;
+				line-height: 21px;
 				padding: 10px 20px;
 				font-weight: 600;
 				display: block;
