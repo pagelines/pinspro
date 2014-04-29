@@ -17,7 +17,7 @@
 			
 			$('.scrollslider-holder').each(function(){
 				
-				var pinSlideHeight = 0
+				
 
 				that.container = $(this).parent()
 				that.slider = $(this)
@@ -41,15 +41,9 @@
 				
 				that.allSlides.width( slideIndWidth + '%' )
 
-				that.allSlides.each( function(){
-
-					if( $(this).height() > pinSlideHeight ){
-						pinSlideHeight = $(this).height()
-						that.allSlides.height( pinSlideHeight )
-					}
-
-				})
-
+				that.setSlideHeight()
+				
+			
 				// Allow scrolling
 				that.setupScroll()
 
@@ -107,8 +101,28 @@
 				
 			})
 			
+			$(window).resize(function () {
+				that.slider.trigger('scroll')
+				
+			})
 			
 			
+		}
+		
+		, setSlideHeight: function(){
+			
+			var that = this
+			,	pinSlideHeight = 0
+			
+			that.allSlides.each( function(){
+
+				if( $(this).height() > pinSlideHeight ){
+					pinSlideHeight = $(this).height()
+					that.allSlides.height( pinSlideHeight )
+				}
+
+			})
+		
 		}
 		
 		, setupTimer: function(){
@@ -156,6 +170,8 @@
 				else 
 					that.noScrollEvent = false
 			})
+			
+			
 			
 		}
 		
