@@ -99,19 +99,6 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	}
 	
 	
-	/* 
-	 * Sets the info for the draft page that is created on install. This is the page users are redirected to after activation.
-	 */
-	function activation_page_data(){
-		$data = array(
-			'post_title'	=> 'PinsPro Getting Started',
-			'post_name'		=> 'pinspro-getting-started',
-			'template'		=> 'pp-welcome',
-		);
-		
-		return $data;
-	}
-	
 	/*
 	 * 
 	 */ 
@@ -141,7 +128,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	function page_templates(){
 		
 		$templates = array(
-			'pp-welcome' 	=> $this->template_welcome(),
+			'welcome' 		=> $this->template_welcome(),
 			'pp-pins' 		=> $this->template_pins(),
 			'pp-blog' 		=> $this->template_blog(),
 			'pp-post' 		=> $this->template_post(),
@@ -270,7 +257,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	// Template Map
 	function template_welcome(){
 		
-		$template['key'] = 'pp-welcome';
+		$template['key'] = 'welcome';
 		
 		$template['name'] = 'PinsPro | Welcome';
 		
@@ -281,8 +268,8 @@ class PageLinesInstallTheme extends PageLinesInstall{
 			array(
 				'object'	=> 'PLSectionArea',
 				'settings'	=> array(
-					'pl_area_bg' 		=> 'pl-dark-img',
-					'pl_area_image'		=> '[pl_theme_url]/images/slide01.jpg',
+					'pl_area_theme' 		=> 'pl-dark-img',
+					'pl_area_background'		=> '[pl_theme_url]/images/stock-1.jpg',
 					'pl_area_pad'		=> '80px',
 					'pl_area_parallax'	=> 'pl-parallax'
 				),
@@ -296,7 +283,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 It\'s responsive too so it looks great everywhere.',
 							'pagelines_masthead_img'		=> '[pl_parent_url]/images/getting-started-pl-logo.png',
 							'masthead_button_link_1'		=> home_url(),
-							'masthead_button_text_1'		=> 'View Your Blog <i class="icon-angle-right"></i>',
+							'masthead_button_text_1'		=> 'View Your Blog <i class="icon icon-angle-right"></i>',
 							'masthead_button_theme_1'		=> 'btn-flat',
 						)
 					),
@@ -309,10 +296,10 @@ It\'s responsive too so it looks great everywhere.',
 						'settings'	=> array(
 							'ibox_array'	=> array(
 								array(
-									'title'	=> 'Quick Start',
+									'title'	=> 'User Guide',
 									'text'	=> 'New to PageLines? Get started fast with PageLines DMS Quick Start guide...',
 									'icon'	=> 'rocket',
-									'link'	=> 'http://www.pagelines.com/quickstart/'
+									'link'	=> 'http://www.pagelines.com/user-guide/'
 								),
 								array(
 									'title'	=> 'Forum',
