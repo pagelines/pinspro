@@ -181,9 +181,9 @@ class PageLinesInstallTheme extends PageLinesInstall{
 			array(
 				'object'	=> 'PLPageHeader',
 				'settings'	=> array(
-					'pl_area_theme' 		=> 'pl-dark-img',
-					'pl_area_background'		=> '[pl_theme_url]/images/stock-2.jpg',
-					'pl_area_parallax'	=> 'pl-scroll-translate'
+					'pageheader_theme' 		=> 'pl-dark-img',
+					'pageheader_background'		=> '[pl_theme_url]/images/stock-2.jpg',
+					'pageheader_parallax'	=> 'pl-scroll-translate'
 				),
 
 			),
@@ -288,7 +288,7 @@ It\'s responsive too so it looks great everywhere.',
 							'pagelines_masthead_img'		=> '[pl_parent_url]/images/getting-started-pl-logo.png',
 							'masthead_button_link_1'		=> home_url(),
 							'masthead_button_text_1'		=> 'View Your Blog <i class="icon icon-angle-right"></i>',
-							'masthead_button_theme_1'		=> 'btn-flat',
+							'masthead_button_theme_1'		=> 'btn-ol-white',
 						)
 					),
 				)
