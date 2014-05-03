@@ -78,8 +78,15 @@ class PLPostPins extends PageLinesSection {
 							'title' 		=> __( 'Attachment source', 'pagelines' ),
 						),
 						array(
+							'key'		=> 'pins_number',
+							'default'	=> '12',
+							'type' 		=> 'text',
+							'label' 	=> __( 'Number of Pins', 'pagelines' ),
+							'title' 	=> __( 'Number of Pins', 'pagelines' ),
+						),
+						array(
 							'key'		=> 'pins_meta',
-							'default'	=> '[post_date] / [post_comments]',
+							'default'	=> '[post_date] <br/> [post_comments]',
 							'type' 		=> 'text',
 							'label' 	=> __( 'Pin Meta Info', 'pagelines' ),
 							'title' 	=> __( 'Pin Meta Info', 'pagelines' ),
@@ -158,7 +165,7 @@ class PLPostPins extends PageLinesSection {
 			// else 
 			// 	
 			
-			$pins = $this->load_posts($page, $category, $post_type);
+			$pins = $this->load_posts($page, $category, $post_type, $number_of_pins);
 
 		
 
@@ -222,7 +229,7 @@ class PLPostPins extends PageLinesSection {
 		$u = add_query_arg('pins', $page + 1, pl_current_url());
 		
 		// just to see if we should show link
-		$next_posts = $this->load_posts( $page + 1, $category, $post_type);
+		$next_posts = $this->load_posts( $page + 1, $category, $post_type, $number_of_pins);
 			
 		
 		
@@ -257,7 +264,7 @@ class PLPostPins extends PageLinesSection {
 		);
 	}
 
-	function load_posts( $page = 1, $category = null, $post_type = null){
+	function load_posts( $page = 1, $category = null, $post_type = null, $number = null){
 		
 		$query = array();
 		
@@ -273,7 +280,8 @@ class PLPostPins extends PageLinesSection {
 		if( isset( $_GET['s'] ) && $_GET['s'] != '' )
 			$query['s'] = $_GET['s'];
 		
-		//$query['showposts'] = $number;
+		if( isset($number) )
+			$query['posts_per_page'] = $number;
 		
 
 		$q = new WP_Query($query);
