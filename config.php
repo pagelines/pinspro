@@ -128,7 +128,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 	function page_templates(){
 		
 		$templates = array(
-			'welcome' 		=> $this->template_welcome(),
+			'welcome' 		=> $this->template_welcome(), // default on install
 			'pp-pins' 		=> $this->template_pins(),
 			'pp-blog' 		=> $this->template_blog(),
 			'pp-post' 		=> $this->template_post(),
@@ -180,7 +180,11 @@ class PageLinesInstallTheme extends PageLinesInstall{
 		$template['map'] = array(
 			array(
 				'object'	=> 'PLPageHeader',
-				'settings'	=> array(),
+				'settings'	=> array(
+					'pl_area_theme' 		=> 'pl-dark-img',
+					'pl_area_background'		=> '[pl_theme_url]/images/stock-2.jpg',
+					'pl_area_parallax'	=> 'pl-scroll-translate'
+				),
 
 			),
 			array(
@@ -271,7 +275,7 @@ class PageLinesInstallTheme extends PageLinesInstall{
 					'pl_area_theme' 		=> 'pl-dark-img',
 					'pl_area_background'		=> '[pl_theme_url]/images/stock-1.jpg',
 					'pl_area_pad'		=> '80px',
-					'pl_area_parallax'	=> 'pl-parallax'
+					'pl_area_parallax'	=> 'pl-scroll-translate'
 				),
 				
 				'content'	=> array(
