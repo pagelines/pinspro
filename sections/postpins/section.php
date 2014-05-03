@@ -80,7 +80,8 @@ class PLPostPins extends PageLinesSection {
 						array(
 							'key'		=> 'pins_number',
 							'default'	=> '12',
-							'type' 		=> 'text',
+							'type'			=> 'count_select',
+							'count_number'	=> '30',
 							'label' 	=> __( 'Number of Pins', 'pagelines' ),
 							'title' 	=> __( 'Number of Pins', 'pagelines' ),
 						),
