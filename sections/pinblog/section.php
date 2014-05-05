@@ -21,6 +21,35 @@ class PinBlog extends PageLinesSection {
 
 	}
 
+	function section_opts(){
+		
+		$options = array();
+
+		$options[] = array(
+
+			'title' => __( 'Configuration', 'pagelines' ),
+			'key'	=> 'pb_config',
+			'col'	=> 1,
+			'type'	=> 'multi',
+			'opts'	=> array(
+				array(
+					'key'			=> 'hide_karma',
+					'type' 			=> 'check',
+					'label' 	=> __( 'Hide Social Counter?', 'pagelines' ),
+				),
+				array(
+					'key'			=> 'hide_comment_link',
+					'type' 			=> 'check',
+					'label' 	=> __( 'Hide Comment Counter/Link?', 'pagelines' ),
+				),
+			)
+
+		);
+
+		return $options;
+		
+	}
+
 	/**
 	* Section template.
 	*/
@@ -115,12 +144,14 @@ class PinBlog extends PageLinesSection {
 						
 					</div>
 					<div class="the-footer">
-						<?php if( comments_open( get_the_ID() ) ): ?>
+						<?php if( comments_open( get_the_ID() ) && ! $this->opt('hide_comment_link') ): ?>
 						<a href="<?php the_permalink(); ?>#comments">
 							<i class="icon icon-comments"></i> <?php comments_number( '0', '1', '%s' ); ?>
 						</a>
 						<?php endif; ?>
-						<?php echo do_shortcode( '[pl_karma]' ); ?>
+						<?php if( ! $this->opt('hide_karma') ): ?>
+							<?php echo do_shortcode( '[pl_karma]' ); ?>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>
