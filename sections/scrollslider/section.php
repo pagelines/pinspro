@@ -130,9 +130,9 @@ class PLScrollSlider extends PageLinesSection {
 					$link_text = pl_array_get( 'link_text', $slide, __('More', 'pagelines') ); 
 					$link_style = pl_array_get( 'link_style', $slide, 'btn-ol-white' ); 
 
-					$link_2 = pl_array_get( 'link_2', $slide ); 
-					$link_2_text = pl_array_get( 'link_2_text', $slide, __('Check it out', 'pagelines') ); 
-					$link_2_style = pl_array_get( 'link_2_style', $slide, 'btn-info' );
+					$link_2 = pl_array_get( 'link2', $slide ); 
+					$link_2_text = pl_array_get( 'link2_text', $slide, __('Check it out', 'pagelines') ); 
+					$link_2_style = pl_array_get( 'link2_style', $slide, 'btn-info' );
 
 					$link = ( $link ) ? sprintf('<a href="%s" class="btn btn-large slider-btn %s">%s</a>', $link, $link_style, $link_text) : false;
 					$link_2 = ( $link_2 ) ? sprintf('<a href="%s" class="btn btn-large slider-btn %s">%s</a>', $link_2, $link_2_style, $link_2_text) : false;
