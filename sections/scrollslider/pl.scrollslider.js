@@ -15,6 +15,9 @@
 		init: function( ){
 			var that = this
 			
+			that.setSlideHeight()
+			$(window).resize( that.setSlideHeight )
+			
 			$('.scrollslider-holder').each(function(){
 				
 				
@@ -27,26 +30,31 @@
 				
 
 				that.numSlides = that.allSlides.length
-
-				that.duration = (that.slider.data('duration')) ? that.slider.data('duration') : 10000
-				that.transition = (that.slider.data('transition')) ? that.slider.data('transition') : 800
-
-				that.timer = (that.slider.data('timer')) ? that.slider.data('timer') : 1
-
+				
 				// Setup Slide Dimensions
 				var sliderTotalWidth = that.numSlides * 100
 				,	slideIndWidth = 100 / that.numSlides
 
 				$('.scrollslider-slider').width( sliderTotalWidth + '%')
 				
-				that.allSlides.width( slideIndWidth + '%' )
+				that.allSlides.each(function(){
+					$(this).css( 'width', '50%' )
+					
+				})
+			
+				
+				that.duration = (that.slider.data('duration')) ? that.slider.data('duration') : 10000
+				that.transition = (that.slider.data('transition')) ? that.slider.data('transition') : 800
 
-				that.setSlideHeight()
+				that.timer = (that.slider.data('timer')) ? that.slider.data('timer') : 1
+
 				
 			
 				// Allow scrolling
 				that.setupScroll()
 
+
+					
 				// Allow nav
 				if( that.numSlides > 1 )
 					that.setupNav()
@@ -66,6 +74,7 @@
 					})
 				})
 
+				
 				
 				// Allow Navigation
 				that.navElements.on( 'click', function(){
@@ -107,22 +116,36 @@
 			})
 			
 			
+			
+		
 		}
 		
 		, setSlideHeight: function(){
 			
 			var that = this
-			,	pinSlideHeight = 0
 			
-			that.allSlides.each( function(){
+			
+			$( '.scrollslider-holder' ).each( function() {
+				
+				that.slider = $(this)
 
-				if( $(this).height() > pinSlideHeight ){
-					pinSlideHeight = $(this).height()
-					that.allSlides.height( pinSlideHeight )
-				}
+				that.allSlides = that.slider.find('.slide')
+				that.allSlides.css('height', '')
+				
+				var pinSlideHeight = 0
 
+				that.allSlides.each( function(){
+
+					if( $(this).height() > pinSlideHeight ){
+						pinSlideHeight = $(this).height()
+						that.allSlides.height( pinSlideHeight )
+					}
+
+				})
+				
 			})
-		
+			
+			
 		}
 		
 		, setupTimer: function(){
