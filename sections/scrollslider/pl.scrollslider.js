@@ -38,7 +38,7 @@
 				$('.scrollslider-slider').width( sliderTotalWidth + '%')
 				
 				that.allSlides.each(function(){
-					$(this).css( 'width', '50%' )
+					$(this).css( 'width', slideIndWidth+'%' )
 					
 				})
 			
