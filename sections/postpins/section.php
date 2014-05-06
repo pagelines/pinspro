@@ -14,7 +14,8 @@ class PLPostPins extends PageLinesSection {
 	
 	function section_styles(){
 		wp_enqueue_script('infinitescroll', $this->base_url.'/script.infinitescroll.js', array( 'jquery' ), PL_CORE_VERSION, true);
-		wp_enqueue_script('masonry', $this->base_url.'/script.masonry.js', array( 'jquery' ), PL_CORE_VERSION, true);
+		//wp_enqueue_script('masonry', $this->base_url.'/script.masonry.js', array( 'jquery' ), PL_CORE_VERSION, true);
+		wp_enqueue_script( 'isotope', PL_JS . '/utils.isotope.min.js', array('jquery'), pl_get_cache_key(), true);
 		wp_enqueue_script('pl-pins', $this->base_url.'/pl.pins.js', array( 'masonry' ), PL_CORE_VERSION, true);
 		
 	}
@@ -30,25 +31,6 @@ class PLPostPins extends PageLinesSection {
 					'opts'			=> array(
 					
 						
-						array(
-							'key'		=> 'pins_width',
-							'place'		=> 237,
-							'type' 		=> 'text_small',
-							'label' 	=> __( 'Pin Width in Pixels', 'pagelines' ),
-							'title' 	=> __( 'Pin Width', 'pagelines' ),
-							'help' 		=> __( 'The width of post pins in pixels. Default is <strong>237px</strong>.', 'pagelines' )
-						),
-
-						
-						array(
-							'key'		=> 'pins_gutterwidth',
-							'type' 		=> 'text_small',
-							'place'		=> 15,
-							'label' 	=> __( 'Pin Gutter Width in Pixels', 'pagelines' ),
-							'title' 	=> __( 'Pin Gutter Width', 'pagelines' ),
-							'help' 		=> __( 'The width of the spacing between post pins in pixels. Default is <strong>15px</strong>.', 'pagelines' )
-						),
-
 						array(
 							'key'			=> 'pins_loading',
 							'type' 			=> 'select',
@@ -149,8 +131,8 @@ class PLPostPins extends PageLinesSection {
 		$special_meta = ($this->opt('pins_meta')) ? $this->opt('pins_meta') : '[post_date] / [post_comments]';
 
 		// JAVASCRIPT VARIABLES
-		$pin_width = ($this->opt('pins_width')) ? $this->opt('pins_width') : 255;
-		$gutter_width = ($this->opt('pins_gutterwidth')) ? $this->opt('pins_gutterwidth') : 15;
+	//	$pin_width = ($this->opt('pins_width')) ? $this->opt('pins_width') : 255;
+	//	$gutter_width = ($this->opt('pins_gutterwidth')) ? $this->opt('pins_gutterwidth') : 15;
 		$loading = ( $this->opt('pins_loading') ) ? $this->opt('pins_loading') : 'ajax';
 
 		$current_url = $this->pl_current_url();
@@ -214,8 +196,8 @@ class PLPostPins extends PageLinesSection {
 				);
 
 				$out .= sprintf(
-					'<div class="postpin-wrap" style="width: %spx;"><article class="postpin">%s%s</article></div>',
-					$pin_width - 18,
+					'<div class="span3 isotope-item"><div class="span-wrap postpin-wrap" ><article class="postpin">%s%s</article></div></div>',
+				
 					$image,
 					$content
 				);
@@ -251,14 +233,12 @@ class PLPostPins extends PageLinesSection {
 		
 		printf(	
 			'<div class="pinboard fix" data-id="%s"> 
-				<div class="postpin-list fix"  data-loading="%s" data-pin-width="%s" data-gutter-width="%s" data-url="%s">%s</div> 
+				<div class="postpin-list row row-set with-gutter fix"  data-loading="%s" data-url="%s">%s</div> 
 				%s 
 				<div class="clear"></div>
 			</div>', 
 			$this->meta['clone'],
 			$loading,
-			$pin_width,
-			$gutter_width,
 			$this->base_url,
 			$out, 
 			$next_url
