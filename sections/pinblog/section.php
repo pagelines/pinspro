@@ -117,12 +117,15 @@ class PinBlog extends PageLinesSection {
 					</div>
 					<?php endif; ?>
 					<div class="the-footer fix">
-						<?php  if( ! is_single() ): ?>
-							<a href="<?php the_permalink(); ?>">Read More <i class="icon icon-angle-right"></i></a>
-						<?php else: ?>
-							<?php previous_post_link('%link', 'Next article: %title') ?>
-						<?php endif; ?>
-						<?php echo do_shortcode('[post_edit before="" after=""]');?>
+						<div class="the-links pl-border fix">
+							<?php  if( ! is_single() ): ?>
+								<a href="<?php the_permalink(); ?>">Read More <i class="icon icon-angle-right"></i></a>
+							<?php else: ?>
+								<?php previous_post_link('%link', 'Next article: %title') ?>
+							<?php endif; ?>
+							<?php echo do_shortcode('[post_edit before="" after=""]');?>
+						</div>
+						
 						<div class="social-shares">
 							<?php echo do_shortcode('[like_button] [pinterest] [twitter_button]');?>
 						</div>
@@ -144,14 +147,16 @@ class PinBlog extends PageLinesSection {
 						
 					</div>
 					<div class="the-footer">
-						<?php if( comments_open( get_the_ID() ) && ! $this->opt('hide_comment_link') ): ?>
-						<a href="<?php the_permalink(); ?>#comments">
-							<i class="icon icon-comments"></i> <?php comments_number( '0', '1', '%s' ); ?>
-						</a>
-						<?php endif; ?>
-						<?php if( ! $this->opt('hide_karma') ): ?>
-							<?php echo do_shortcode( '[pl_karma]' ); ?>
-						<?php endif; ?>
+						<div class="the-links fix">
+							<?php if( comments_open( get_the_ID() ) && ! $this->opt('hide_comment_link') ): ?>
+							<a href="<?php the_permalink(); ?>#comments">
+								<i class="icon icon-comments"></i> <?php comments_number( '0', '1', '%s' ); ?>
+							</a>
+							<?php endif; ?>
+							<?php if( ! $this->opt('hide_karma') ): ?>
+								<?php echo do_shortcode( '[pl_karma]' ); ?>
+							<?php endif; ?>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -72,27 +72,31 @@
 			[class*="_pin_it_button"]{
 				margin-right: 20px !important;
 			}
-			> .hint,
-			> a{
-				border:none;
-				border-right: 1px solid #ddd;
-				height: 21px;
-				line-height: 21px;
-				padding: 10px 20px;
-				font-weight: 600;
-				display: block;
+			.the-links{
 				float: left;
-			}
-			> a, >i{
-				color: #666; 
-				
-				&:hover{
-					background: #f7f7f7;
+				> .hint,
+				> a{
+					border:none;
+					border-right: 1px solid #ddd;
+					height: 21px;
+					line-height: 21px;
+					padding: 10px 20px;
+					font-weight: 600;
+					display: block;
+					float: left;
+				}
+				> a, >i{
+					color: #666; 
+
+					&:hover{
+						background: #f7f7f7;
+					}
+				}
+				> .hint{
+					color: #aaa;
 				}
 			}
-			> .hint{
-				color: #aaa;
-			}
+			
 			.social-shares{
 				float: right;
 				padding: 10px 0 5px;
@@ -121,5 +125,19 @@
 			}
 		}
 		
+	}
+	@media (max-width: @resPhoneLandscape) {
+		article .the-footer{
+			.social-shares{
+				float: none;
+				text-align: center;
+			}
+			.the-links{
+				float: none;
+				border-bottom: 1px solid #ddd;
+			}
+		}
+		
+	
 	}
 }
