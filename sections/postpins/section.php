@@ -155,7 +155,9 @@ class PLPostPins extends PageLinesSection {
 		if( !empty( $pins) ){
 		
 			foreach( $pins as $key => $p ){
+				global $post;
 				$post = $p;
+				setup_postdata($post);
 				if(has_post_thumbnail($p->ID) && get_the_post_thumbnail($p->ID) != ''){
 					$thumb = get_the_post_thumbnail($p->ID, $image_size );
 
@@ -202,7 +204,7 @@ class PLPostPins extends PageLinesSection {
 					$content
 				);
 			}
-			
+			wp_reset_postdata();
 			
 		} else {
 			echo pl_posts_404();
